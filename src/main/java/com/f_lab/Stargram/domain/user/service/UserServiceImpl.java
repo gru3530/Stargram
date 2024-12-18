@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String loginUser(LoginRequestDto dto) {
-        User user = userRepository.findByUsername(dto.getUserName())
+        User user = userRepository.findByUserName(dto.getUserName())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
@@ -30,12 +30,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String registerUser(RegisterRequestDto dto) {
-        if (userRepository.findByUsername(dto.getUserName()).isPresent()) {
+        if (userRepository.findByUserName(dto.getUserName()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 사용자 이름입니다.");
         }
 
         User user = new User();
-        user.setUsername(dto.getUserName());
+        user.setUserName(dto.getUserName());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
