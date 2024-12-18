@@ -1,11 +1,20 @@
 package com.f_lab.Stargram.domain.user.service;
 
-import com.f_lab.Stargram.domain.user.User;
+import com.f_lab.Stargram.domain.user.model.Profile;
+import com.f_lab.Stargram.domain.user.model.UpdateProfileRequestDto;
 
-import com.f_lab.Stargram.model.LoginRequestDto;
-import com.f_lab.Stargram.model.RegisterRequestDto;
+import java.util.List;
+import java.util.Set;
 
 public interface UserService {
-    String loginUser(LoginRequestDto dto);
-    String registerUser(RegisterRequestDto dto);
+
+    void updateProfile(long userId, UpdateProfileRequestDto updateProfileRequestDto);
+
+    Profile getProfileInfo(long userId);
+
+    boolean updateProfileImage(long userId, String profileImgUrl);
+
+    Set<Profile> getUsersByUserIds(List<Long> userIds);
+
+    void changePassword(long userId, String newPassword);
 }

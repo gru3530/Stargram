@@ -1,45 +1,108 @@
 package com.f_lab.Stargram.domain.user.service;
 
-import com.f_lab.Stargram.domain.user.User;
-import com.f_lab.Stargram.domain.user.mapper.UserRepository;
-import com.f_lab.Stargram.model.LoginRequestDto;
-import com.f_lab.Stargram.model.RegisterRequestDto;
+import com.f_lab.Stargram.domain.user.repository.UserRepository;
+import com.f_lab.Stargram.domain.user.model.User;
+import com.f_lab.Stargram.domain.user.model.Profile;
+import com.f_lab.Stargram.domain.user.model.UpdateProfileRequestDto;
+import com.f_lab.Stargram.common.exception.UserNotFoundException;
+import com.f_lab.Stargram.common.exception.InvalidInputException;
+import com.f_lab.Stargram.utils.UserRedisUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserRedisUtil userRedisUtil;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
+    @Transactional
     @Override
-    public String loginUser(LoginRequestDto dto) {
-        User user = userRepository.findByUserName(dto.getUserName())
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
-        }
-        return "로그인 성공!";
-    }
+    public void updateProfile(long userId, UpdateProfileRequestDto updateProfileRequestDto) {
+        validateUserId(userId);
 
-    @Override
-    public String registerUser(RegisterRequestDto dto) {
-        if (userRepository.findByUserName(dto.getUserName()).isPresent()) {
-            throw new IllegalArgumentException("이미 존재하는 사용자 이름입니다.");
-        }
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        User user = new User();
-        user.setUserName(dto.getUserName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setUserName(updateProfileRequestDto.getUsername());
+        user.setEmail(updateProfileRequestDto.getEmail());
+        user.setProfileImageUrl(updateProfileRequestDto.getProfileImageUrl());
 
         userRepository.save(user);
-        return "회원가입 성공!";
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Profile getProfileInfo(long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        return new Profile(user.getId(), user.getUserName(), user.getEmail(), user.getProfileImageUrl());
+    }
+
+    @Transactional
+    @Override
+    public boolean updateProfileImage(long userId, String profileImgUrl) {
+        validateUserId(userId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        user.setProfileImageUrl(profileImgUrl);
+        userRepository.save(user);
+        return true;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Set<Profile> getUsersByUserIds(List<Long> userIds) {
+        Set<Profile> cachedProfiles = userRedisUtil.getUsers(userIds);
+
+        Set<Long> userIdsNotInCache = userIds.stream()
+                .filter(userId -> cachedProfiles.stream().noneMatch(profile -> profile.getUserId().equals(userId)))
+                .collect(Collectors.toSet());
+
+        if (!userIdsNotInCache.isEmpty()) {
+            Set<User> usersFromDb = userRepository.findByIdIn(userIdsNotInCache);
+
+            Set<Profile> profilesFromDb = usersFromDb.stream()
+                    .map(user -> new Profile(user.getId(), user.getUserName(), user.getEmail(), user.getProfileImageUrl()))
+                    .collect(Collectors.toSet());
+
+            cachedProfiles.addAll(profilesFromDb);
+
+            userRedisUtil.saveAll(profilesFromDb);
+        }
+
+        return cachedProfiles;
+    }
+
+    private void validateUserId(long userId) {
+        if (userId <= 0) {
+            throw new InvalidInputException("Invalid user ID");
+        }
+    }
+
+    @Transactional
+    @Override
+    public void changePassword(long userId, String newPassword) {
+        validateUserId(userId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
     }
 }

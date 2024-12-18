@@ -1,4 +1,4 @@
-package com.f_lab.Stargram.model;
+package com.f_lab.Stargram.domain.user.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.f_lab.Stargram.configuration;
+package com.f_lab.Stargram.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
