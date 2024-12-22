@@ -30,6 +30,3 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'com.mysql:mysql-connector-j'
 }
-
-
-apply plugin: 'java'
