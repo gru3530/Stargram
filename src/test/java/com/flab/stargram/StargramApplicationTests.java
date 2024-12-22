@@ -1,4 +1,4 @@
-package com.f_lab.Stargram;
+package com.flab.stargram;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
