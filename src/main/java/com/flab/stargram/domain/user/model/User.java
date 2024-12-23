@@ -1,11 +1,9 @@
-package com.f_lab.Stargram.domain.user;
+package com.flab.stargram.domain.user.model;
+
+import java.util.Date;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
+import lombok.*;
 
 @Entity
 @Getter
@@ -17,7 +15,7 @@ public class User {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String username;
+    private String userName;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -25,5 +23,11 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private boolean isInfluencer = false;
+    @Column(nullable = false)
+    private Date createdAt;
+
+    @Column(nullable = false)
+    private Date updatedAt;
+
+    private Date loginAt;
 }

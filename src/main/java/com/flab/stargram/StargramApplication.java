@@ -1,4 +1,4 @@
-package com.f_lab.Stargram;
+package com.flab.stargram;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
