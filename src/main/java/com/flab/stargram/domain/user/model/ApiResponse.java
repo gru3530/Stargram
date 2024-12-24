@@ -5,14 +5,15 @@ import lombok.Getter;
 @Getter
 public enum ApiResponse {
 	SUCCESS(true, 0, "Success"),
-	EMPTY_USERNAME(false, 100, "Empty Username"),
-	EMPTY_EMAIL(false, 101, "Empty Email"),
-	EMPTY_PASSWORD(false, 102, "Empty Password"),
-	DUPLICATE_USERNAME(false, 103, "Duplicate username"),
-	DUPLICATE_EMAIL(false, 104, "Duplicate email"),
-	USER_NOT_FOUND(false, 105, "User Not Found"),
-	INVALID_PASSWORD(false, 106, "Invalid Password"),
-	FAILURE(false, 107,"login Failure");
+
+	EMPTY_USERNAME(100, "Empty Username"),
+	EMPTY_EMAIL(101, "Empty Email"),
+	EMPTY_PASSWORD(102, "Empty Password"),
+	DUPLICATE_USERNAME(103, "Duplicate username"),
+	DUPLICATE_EMAIL(104, "Duplicate email"),
+	USER_NOT_FOUND(105, "User Not Found"),
+	INVALID_PASSWORD(106, "Invalid Password"),
+	FAILURE(107,"login Failure");
 
 	private final boolean isSuccess;
 	private final int code;
@@ -21,6 +22,12 @@ public enum ApiResponse {
 
 	ApiResponse(boolean isSuccess, int code, String message) {
 		this.isSuccess = isSuccess;
+		this.code = code;
+		this.message = message;
+	}
+
+	ApiResponse(int code, String message) {
+		this.isSuccess = false;
 		this.code = code;
 		this.message = message;
 	}
