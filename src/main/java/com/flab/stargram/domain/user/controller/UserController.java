@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
 import com.flab.stargram.domain.user.model.ApiResponse;
 import com.flab.stargram.domain.user.service.UserService;
@@ -20,5 +21,10 @@ public class UserController {
 	@PostMapping("/signup")
 	public ApiResponse signUp(@RequestBody SignUpRequestDto dto) {
 		return  userService.signUp(dto);
+	}
+
+	@PostMapping("/users/login")
+	public ApiResponse login(@RequestBody LoginDto dto) {
+		return userService.login(dto);
 	}
 }
