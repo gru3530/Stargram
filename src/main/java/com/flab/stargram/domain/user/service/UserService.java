@@ -5,7 +5,7 @@ import java.util.Date;
 import org.springframework.stereotype.Service;
 
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
-import com.flab.stargram.domain.user.model.SignUpResult;
+import com.flab.stargram.domain.user.model.ApiResponse;
 import com.flab.stargram.domain.user.model.User;
 import com.flab.stargram.domain.user.repository.UserRepository;
 
@@ -17,19 +17,19 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	public SignUpResult signUp(SignUpRequestDto dto) {
+	public ApiResponse signUp(SignUpRequestDto dto) {
 		if (userRepository.existsByUserName(dto.getUserName())) {
-			return SignUpResult.DUPLICATE_USERNAME;
+			return ApiResponse.DUPLICATE_USERNAME;
 		} else if (userRepository.existsByEmail(dto.getEmail())) {
-			return SignUpResult.DUPLICATE_EMAIL;
+			return ApiResponse.DUPLICATE_EMAIL;
 		}
 
 		try {
 			User user = mapDtoToEntity(dto);
 			userRepository.save(user);
-			return SignUpResult.SUCCESS;
+			return ApiResponse.SUCCESS;
 		} catch (Exception e) {
-			return SignUpResult.FAILURE;
+			return ApiResponse.FAILURE;
 		}
 	}
 
@@ -44,5 +44,4 @@ public class UserService {
 		user.setUpdatedAt(date);
 		return user;
 	}
-
 }
