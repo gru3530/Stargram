@@ -8,7 +8,7 @@ public class ApiResponseDto {
 	private final int code;
 	private final String message;
 
-	public ApiResponseDto(ApiResponse apiResponse) {
+	public ApiResponseDto(ApiResponseEnum apiResponse) {
 		this.isSuccess = apiResponse.isSuccess();
 		this.code = apiResponse.getCode();
 		this.message = apiResponse.getMessage();

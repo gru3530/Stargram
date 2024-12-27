@@ -3,7 +3,7 @@ package com.flab.stargram.domain.user.model;
 import lombok.Getter;
 
 @Getter
-public enum ApiResponse {
+public enum ApiResponseEnum {
 	SUCCESS(true, 0, "Success"),
 
 	EMPTY_USERNAME(100, "Empty Username"),
@@ -20,13 +20,13 @@ public enum ApiResponse {
 	private final String message;
 
 
-	ApiResponse(boolean isSuccess, int code, String message) {
+	ApiResponseEnum(boolean isSuccess, int code, String message) {
 		this.isSuccess = isSuccess;
 		this.code = code;
 		this.message = message;
 	}
 
-	ApiResponse(int code, String message) {
+	ApiResponseEnum(int code, String message) {
 		this.isSuccess = false;
 		this.code = code;
 		this.message = message;
