@@ -2,6 +2,9 @@ package com.flab.stargram.domain.user.model;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,11 +26,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @CreatedDate
     @Column(nullable = false)
     private Date createdAt;
 
+    @LastModifiedDate
     @Column(nullable = false)
     private Date updatedAt;
 
-    private Date loginAt;
+    private Date loggedInAt;
 }

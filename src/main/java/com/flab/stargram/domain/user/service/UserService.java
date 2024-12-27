@@ -73,7 +73,7 @@ public class UserService {
 		}
 
 		try {
-			user.setLoginAt(new Date());
+			user.setLoggedInAt(new Date());
 			userRepository.save(user);
 			return ApiResponse.SUCCESS;
 		} catch (Exception e) {
