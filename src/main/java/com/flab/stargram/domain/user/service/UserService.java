@@ -9,50 +9,42 @@ import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
 import com.flab.stargram.domain.user.model.ApiResponse;
 import com.flab.stargram.domain.user.model.User;
-import com.flab.stargram.domain.user.repository.UserRepository;
 
 @Service
 public class UserService {
-	private final UserRepository userRepository;
 
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	private final commonService commonService;
+
+
+	public UserService(commonService commonService) {
+		this.commonService = commonService;
 	}
 
 	public ApiResponse signUp(SignUpRequestDto dto) {
-		if (userRepository.existsByUserName(dto.getUserName())) {
+		if (commonService.existsByUserName(dto)) {
 			return ApiResponse.DUPLICATE_USERNAME;
-		} else if (userRepository.existsByEmail(dto.getEmail())) {
+		} else if (commonService.existsByEmail(dto)) {
 			return ApiResponse.DUPLICATE_EMAIL;
 		}
-		userRepository.save(new User(dto));
+		commonService.save(new User(dto));
 		return ApiResponse.SUCCESS;
 	}
 
 	public ApiResponse login(LoginDto dto) {
-		if(UserValidator.isUserNameValid(dto.getUserName()) == false) {
-			return ApiResponse.EMPTY_USERNAME;
-		} else if(UserValidator.isPasswordValid(dto.getPassword()) == false) {
-			return ApiResponse.EMPTY_PASSWORD;
-		}
-
-		Optional<User> byUserName = userRepository.findByUserName(dto.getUserName());
+		Optional<User> byUserName = commonService.findByUserName(dto);
 		if (byUserName.isEmpty()) {
 			return ApiResponse.USER_NOT_FOUND;
 		}
 
 		User user = byUserName.get();
-		if (user.getPassword().equals(dto.getPassword()) == false) {
+		if (!user.isCorrectPassword(dto)) {
 			return ApiResponse.INVALID_PASSWORD;
 		}
 
-		try {
-			user.setLoggedInAt(new Date());
-			userRepository.save(user);
-			return ApiResponse.SUCCESS;
-		} catch (Exception e) {
-			return ApiResponse.FAILURE;
-		}
+		//로그인 시간 업데이트를 위해 save 할 경우 updateAt 변수도 변하기 때문에 다른방식을 생각해야함
+		user.setLoggedInAt(new Date());
+		commonService.save(user);
+		return ApiResponse.SUCCESS;
 
 	}
 }

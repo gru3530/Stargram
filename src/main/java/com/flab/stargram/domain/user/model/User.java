@@ -41,4 +41,8 @@ public class User {
         this.email = dto.getEmail();
         this.password = dto.getPassword();
     }
+
+    public boolean isCorrectPassword(LoginDto dto){
+        return this.getPassword().equals(dto.getPassword());
+    }
 }
