@@ -1,6 +1,6 @@
 package com.flab.stargram.domain.user.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -28,13 +28,13 @@ public class User {
 
     @CreatedDate
     @Column(nullable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(nullable = false)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
-    private Date loggedInAt;
+    private LocalDateTime loggedInAt;
 
     public User(SignUpRequestDto dto) {
         this.userName = dto.getUserName();
