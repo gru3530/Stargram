@@ -20,39 +20,13 @@ public class UserService {
 	}
 
 	public ApiResponse signUp(SignUpRequestDto dto) {
-		if(UserValidator.isUserNameValid(dto.getUserName()) == false) {
-			return ApiResponse.EMPTY_USERNAME;
-		} else if (UserValidator.isEmailValid(dto.getEmail()) == false) {
-			return ApiResponse.EMPTY_EMAIL;
-		} else if(UserValidator.isPasswordValid(dto.getPassword()) == false) {
-			return ApiResponse.EMPTY_PASSWORD;
-		}
-
 		if (userRepository.existsByUserName(dto.getUserName())) {
 			return ApiResponse.DUPLICATE_USERNAME;
 		} else if (userRepository.existsByEmail(dto.getEmail())) {
 			return ApiResponse.DUPLICATE_EMAIL;
 		}
-
-		try {
-			User user = mapDtoToEntity(dto);
-			userRepository.save(user);
-			return ApiResponse.SUCCESS;
-		} catch (Exception e) {
-			return ApiResponse.FAILURE;
-		}
-	}
-
-	private User mapDtoToEntity(SignUpRequestDto dto) {
-		User user = new User();
-		user.setUserName(dto.getUserName());
-		user.setEmail(dto.getEmail());
-		user.setPassword(dto.getPassword());
-
-		Date date = new Date();
-		user.setCreatedAt(date);
-		user.setUpdatedAt(date);
-		return user;
+		userRepository.save(new User(dto));
+		return ApiResponse.SUCCESS;
 	}
 
 	public ApiResponse login(LoginDto dto) {

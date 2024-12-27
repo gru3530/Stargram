@@ -35,4 +35,10 @@ public class User {
     private Date updatedAt;
 
     private Date loggedInAt;
+
+    public User(SignUpRequestDto dto) {
+        this.userName = dto.getUserName();
+        this.email = dto.getEmail();
+        this.password = dto.getPassword();
+    }
 }
