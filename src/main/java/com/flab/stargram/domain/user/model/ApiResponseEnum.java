@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ApiResponseEnum {
-	SUCCESS(true, 0, "Success"),
+	SUCCESS( 0, "Success"),
 
 	EMPTY_USERNAME(100, "Empty Username"),
 	EMPTY_EMAIL(101, "Empty Email"),
@@ -18,13 +18,6 @@ public enum ApiResponseEnum {
 	private final boolean isSuccess;
 	private final int code;
 	private final String message;
-
-
-	ApiResponseEnum(boolean isSuccess, int code, String message) {
-		this.isSuccess = isSuccess;
-		this.code = code;
-		this.message = message;
-	}
 
 	ApiResponseEnum(int code, String message) {
 		this.isSuccess = false;
