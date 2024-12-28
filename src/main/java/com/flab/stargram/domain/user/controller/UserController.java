@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.flab.stargram.domain.user.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
-import com.flab.stargram.domain.user.model.ApiResponseDto;
+import com.flab.stargram.domain.user.model.ApiResult;
 import com.flab.stargram.domain.user.service.UserService;
 
 @RestController
@@ -22,26 +22,27 @@ public class UserController {
 	}
 
 	@PostMapping("/signup")
-	public ApiResponseDto signUp(@RequestBody SignUpRequestDto dto) {
+	public ApiResult<?> signUp(@RequestBody SignUpRequestDto dto) {
 		if (dto.isUserNameEmpty()) {
-			new ApiResponseDto(ApiResponseEnum.EMPTY_USERNAME);
+			return ApiResult.error(ApiResponseEnum.EMPTY_USERNAME);
 		} else if (dto.isEmailEmpty()) {
-			new ApiResponseDto(ApiResponseEnum.EMPTY_EMAIL);
+			return ApiResult.error(ApiResponseEnum.EMPTY_EMAIL);
 		} else if (dto.isPasswordEmpty()) {
-			new ApiResponseDto(ApiResponseEnum.EMPTY_PASSWORD);
+			return ApiResult.error(ApiResponseEnum.EMPTY_PASSWORD);
 		}
 
-		return new ApiResponseDto(userService.signUp(dto));
+		userService.signUp(dto);
+		return ApiResult.success(dto);
 	}
 
 	@PostMapping("/login")
-	public ApiResponseDto login(@RequestBody LoginDto dto) {
+	public ApiResult<?> login(@RequestBody LoginDto dto) {
 		if (dto.isUserNameEmpty()) {
-			new ApiResponseDto(ApiResponseEnum.EMPTY_USERNAME);
+			return ApiResult.error(ApiResponseEnum.EMPTY_USERNAME);
 		} else if (dto.isPasswordEmpty()) {
-			new ApiResponseDto(ApiResponseEnum.EMPTY_PASSWORD);
+			return ApiResult.error(ApiResponseEnum.EMPTY_PASSWORD);
 		}
 
-		return new ApiResponseDto(userService.login(dto));
+		return ApiResult.success(userService.login(dto));
 	}
 }
