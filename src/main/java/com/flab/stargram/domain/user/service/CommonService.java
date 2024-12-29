@@ -10,10 +10,10 @@ import com.flab.stargram.domain.user.model.User;
 import com.flab.stargram.domain.user.repository.UserRepository;
 
 @Service
-public class commonService {
+public class CommonService {
     private final UserRepository userRepository;
 
-    public commonService(UserRepository userRepository) {
+    public CommonService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

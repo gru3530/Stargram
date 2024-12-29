@@ -15,10 +15,10 @@ import com.flab.stargram.domain.user.model.User;
 @Service
 public class UserService {
 
-	private final commonService commonService;
+	private final CommonService commonService;
 
 
-	public UserService(commonService commonService) {
+	public UserService(CommonService commonService) {
 		this.commonService = commonService;
 	}
 
