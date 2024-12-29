@@ -1,10 +1,13 @@
 package com.flab.stargram.domain.user.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ApiResult<T> {
 	private final ApiResponseEnum code;
 	private final String message;
