@@ -15,39 +15,50 @@ import com.flab.stargram.domain.user.model.User;
 @Service
 public class UserService {
 
-	private final CommonService commonService;
+    private final CommonService commonService;
 
+    public UserService(CommonService commonService) {
+        this.commonService = commonService;
+    }
 
-	public UserService(CommonService commonService) {
-		this.commonService = commonService;
-	}
+    public User signUp(SignUpRequestDto dto) {
+        if (existsByUserName(dto)) {
+            throw new DuplicateException(ApiResponseEnum.DUPLICATE_USERNAME);
+        } else if (existsByEmail(dto)) {
+            throw new DuplicateException(ApiResponseEnum.DUPLICATE_EMAIL);
+        }
 
-	public User signUp(SignUpRequestDto dto) {
-		if (commonService.existsByUserName(dto)) {
-			throw new DuplicateException(ApiResponseEnum.DUPLICATE_USERNAME);
-		} else if (commonService.existsByEmail(dto)) {
-			throw new DuplicateException(ApiResponseEnum.DUPLICATE_EMAIL);
-		}
+        User user = new User(dto);
+        commonService.save(user);
+        return user;
+    }
 
-		User user = new User(dto);
-		commonService.save(user);
-		return user;
-	}
+    public User login(LoginDto dto) {
+        Optional<User> byUserName = findByUsername(dto);
+        if (byUserName.isEmpty()) {
+            throw new UserNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
+        }
 
-	public User login(LoginDto dto) {
-		Optional<User> byUserName = commonService.findByUserName(dto);
-		if (byUserName.isEmpty()) {
-			throw new UserNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
-		}
+        User user = byUserName.get();
+        if (!user.isCorrectPassword(dto)) {
+            throw new InvalidPasswordException(ApiResponseEnum.INVALID_PASSWORD);
+        }
 
-		User user = byUserName.get();
-		if (!user.isCorrectPassword(dto)) {
-			throw new InvalidPasswordException(ApiResponseEnum.INVALID_PASSWORD);
-		}
+        //로그인 시간 업데이트를 위해 save 할 경우 updateAt 변수도 변하기 때문에 다른방식을 생각해야함
+        commonService.save(user);
+        return user;
 
-		//로그인 시간 업데이트를 위해 save 할 경우 updateAt 변수도 변하기 때문에 다른방식을 생각해야함
-		commonService.save(user);
-		return user;
+    }
 
-	}
+    private boolean existsByUserName(SignUpRequestDto dto) {
+        return commonService.existsByUserName(dto.getUserName());
+    }
+
+    private boolean existsByEmail(SignUpRequestDto dto) {
+        return commonService.existsByEmail(dto.getEmail());
+    }
+
+    private Optional<User> findByUsername(LoginDto dto) {
+        return commonService.findByUserName(dto.getUserName());
+    }
 }

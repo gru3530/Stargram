@@ -17,16 +17,20 @@ public class CommonService {
         this.userRepository = userRepository;
     }
 
-    public boolean existsByUserName(SignUpRequestDto dto){
-        return userRepository.existsByUserName(dto.getUserName());
+    public boolean existsByUserName(String userName) {
+        return userRepository.existsByUserName(userName);
     }
 
-    public boolean existsByEmail(SignUpRequestDto dto){
-        return userRepository.existsByEmail(dto.getEmail());
+    public boolean existsByEmail(String email){
+        return userRepository.existsByEmail(email);
     }
 
-    public Optional<User> findByUserName(LoginDto dto){
-        return userRepository.findByUserName(dto.getUserName());
+    public Optional<User> findByUserName(String userName) {
+        return userRepository.findByUserName(userName);
+    }
+
+    public boolean findByUserId(Long userId) {
+        return userRepository.findById(userId).isPresent();
     }
 
     public void save(User user){
