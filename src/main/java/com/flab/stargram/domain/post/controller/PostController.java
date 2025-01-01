@@ -1,0 +1,37 @@
+package com.flab.stargram.domain.post.controller;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.flab.stargram.domain.post.service.PostService;
+import com.flab.stargram.domain.post.model.PostRequestDto;
+import com.flab.stargram.domain.user.exception.EmptyInputException;
+import com.flab.stargram.domain.user.model.ApiResponseEnum;
+import com.flab.stargram.domain.user.model.ApiResult;
+
+@RestController
+@RequestMapping("/posts")
+public class PostController {
+
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
+    @PostMapping
+    public ApiResult<?> createPost(@RequestBody PostRequestDto dto) {
+        if (dto.isUserIdEmpty()) {
+            throw new EmptyInputException(ApiResponseEnum.EMPTY_USERID);
+        } else if (dto.isContentEmpty()) {
+            throw new EmptyInputException(ApiResponseEnum.EMPTY_CONTENT);
+        }
+
+        return ApiResult.success(postService.postFeed(dto));
+    }
+
+
+}
