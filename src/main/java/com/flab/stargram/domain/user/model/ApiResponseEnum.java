@@ -12,7 +12,9 @@ public enum ApiResponseEnum {
 	DUPLICATE_EMAIL( "중복된 이메일 주소입니다"),
 	USER_NOT_FOUND( "해당 유저를 찾을 수 없습니다"),
 	INVALID_PASSWORD( "비밀번호가 틀립니다"),
-	FAILURE("login Failure");
+	FAILURE("login Failure"),
+	EMPTY_CONTENT("작성된 내용이 없습니다"),
+	EMPTY_USERID("유저ID가 비어있습니다");
 
 	private final String message;
 
