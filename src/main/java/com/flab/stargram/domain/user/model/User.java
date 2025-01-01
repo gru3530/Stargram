@@ -12,7 +12,6 @@ import lombok.*;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class User {
     @Id
