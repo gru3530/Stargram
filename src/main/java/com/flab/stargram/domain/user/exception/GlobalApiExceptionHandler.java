@@ -6,8 +6,8 @@ import com.flab.stargram.domain.user.model.ApiResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice(basePackages = "com.flab.stargram.domain.user")
-public class UserGlobalExceptionHandler {
+@RestControllerAdvice
+public class GlobalApiExceptionHandler {
 
     @ExceptionHandler(BaseApiException.class)
     public ApiResult<?> handleBaseApiException(BaseApiException e) {
