@@ -3,6 +3,7 @@ package com.flab.stargram.domain.user.service;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.flab.stargram.domain.user.exception.DuplicateException;
 import com.flab.stargram.domain.user.exception.InvalidPasswordException;
@@ -21,6 +22,7 @@ public class UserService {
         this.commonService = commonService;
     }
 
+    @Transactional
     public User signUp(SignUpRequestDto dto) {
         if (existsByUserName(dto)) {
             throw new DuplicateException(ApiResponseEnum.DUPLICATE_USERNAME);
@@ -33,6 +35,7 @@ public class UserService {
         return user;
     }
 
+    @Transactional
     public User login(LoginDto dto) {
         Optional<User> byUserName = findByUsername(dto);
         if (byUserName.isEmpty()) {
@@ -44,11 +47,11 @@ public class UserService {
             throw new InvalidPasswordException(ApiResponseEnum.INVALID_PASSWORD);
         }
 
-        //로그인 시간 업데이트를 위해 save 할 경우 updateAt 변수도 변하기 때문에 다른방식을 생각해야함
-        commonService.save(user);
+        user.recordSuccessfulLogin();
         return user;
-
     }
+
+
 
     private boolean existsByUserName(SignUpRequestDto dto) {
         return commonService.existsByUserName(dto.getUserName());

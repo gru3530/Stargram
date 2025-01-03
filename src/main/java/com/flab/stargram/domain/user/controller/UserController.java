@@ -1,5 +1,6 @@
 package com.flab.stargram.domain.user.controller;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class UserController {
 		this.userService = userService;
 	}
 
+	@Transactional
 	@PostMapping("/signup")
 	public ApiResult<?> signUp(@RequestBody SignUpRequestDto dto) {
 		if (dto.isUserNameEmpty()) {
@@ -35,6 +37,7 @@ public class UserController {
 		return ApiResult.success(userService.signUp(dto));
 	}
 
+	@Transactional
 	@PostMapping("/login")
 	public ApiResult<?> login(@RequestBody LoginDto dto) {
 		if (dto.isUserNameEmpty()) {
