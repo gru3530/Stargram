@@ -31,6 +31,7 @@ public class Post {
     private String content;
 
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
@@ -40,4 +41,5 @@ public class Post {
         this.userId = dto.getUserId();
         this.content = dto.getContent();
     }
+
 }

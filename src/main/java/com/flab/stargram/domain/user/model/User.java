@@ -28,6 +28,7 @@ public class User {
     private String password;
 
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
@@ -43,5 +44,9 @@ public class User {
 
     public boolean isCorrectPassword(LoginDto dto){
         return this.getPassword().equals(dto.getPassword());
+    }
+
+    public void recordSuccessfulLogin() {
+        this.loggedInAt = LocalDateTime.now();
     }
 }
