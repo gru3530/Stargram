@@ -1,5 +1,6 @@
 package com.flab.stargram.domain.user.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ public class UserController {
 
 	@Transactional
 	@PostMapping("/signup")
-	public ApiResult<?> signUp(@RequestBody SignUpRequestDto dto) {
+	public ResponseEntity<ApiResult> signUp(@RequestBody SignUpRequestDto dto) {
 		if (dto.isUserNameEmpty()) {
 			throw new EmptyInputException(ApiResponseEnum.EMPTY_USERNAME);
 		}
@@ -43,7 +44,7 @@ public class UserController {
 
 	@Transactional
 	@PostMapping("/login")
-	public ApiResult<?> login(@RequestBody LoginDto dto) {
+	public ResponseEntity<ApiResult> login(@RequestBody LoginDto dto) {
 		if (dto.isUserNameEmpty()) {
 			throw new EmptyInputException(ApiResponseEnum.EMPTY_USERNAME);
 		}

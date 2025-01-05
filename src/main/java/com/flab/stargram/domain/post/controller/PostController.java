@@ -1,5 +1,6 @@
 package com.flab.stargram.domain.post.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,17 +25,17 @@ public class PostController {
 
     @Transactional
     @PostMapping
-    public ApiResult<?> createPost(@RequestBody PostRequestDto dto) {
+    public ResponseEntity<ApiResult> createPost(@RequestBody PostRequestDto dto) {
         if (dto.isUserIdEmpty()) {
             throw new EmptyInputException(ApiResponseEnum.EMPTY_USERID);
         }
-
         if (dto.isContentEmpty()) {
             throw new EmptyInputException(ApiResponseEnum.EMPTY_CONTENT);
         }
 
         return ApiResult.success(postService.postFeed(dto));
     }
+
 
 
 }
