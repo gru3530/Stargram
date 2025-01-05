@@ -28,9 +28,13 @@ public class UserController {
 	public ApiResult<?> signUp(@RequestBody SignUpRequestDto dto) {
 		if (dto.isUserNameEmpty()) {
 			throw new EmptyInputException(ApiResponseEnum.EMPTY_USERNAME);
-		} else if (dto.isEmailEmpty()) {
+		}
+
+		if (dto.isEmailEmpty()) {
 			throw new EmptyInputException(ApiResponseEnum.EMPTY_EMAIL);
-		} else if (dto.isPasswordEmpty()) {
+		}
+
+		if (dto.isPasswordEmpty()) {
 			throw new EmptyInputException(ApiResponseEnum.EMPTY_PASSWORD);
 		}
 
@@ -42,10 +46,14 @@ public class UserController {
 	public ApiResult<?> login(@RequestBody LoginDto dto) {
 		if (dto.isUserNameEmpty()) {
 			throw new EmptyInputException(ApiResponseEnum.EMPTY_USERNAME);
-		} else if (dto.isPasswordEmpty()) {
+		}
+
+		if (dto.isPasswordEmpty()) {
 			throw new EmptyInputException(ApiResponseEnum.EMPTY_PASSWORD);
 		}
 
 		return ApiResult.success(userService.login(dto));
 	}
+
+
 }

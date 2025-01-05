@@ -27,11 +27,11 @@ public class PostController {
     public ApiResult<?> createPost(@RequestBody PostRequestDto dto) {
         if (dto.isUserIdEmpty()) {
             throw new EmptyInputException(ApiResponseEnum.EMPTY_USERID);
-        } else if (dto.isContentEmpty()) {
-            throw new EmptyInputException(ApiResponseEnum.EMPTY_CONTENT);
         }
 
-
+        if (dto.isContentEmpty()) {
+            throw new EmptyInputException(ApiResponseEnum.EMPTY_CONTENT);
+        }
 
         return ApiResult.success(postService.postFeed(dto));
     }

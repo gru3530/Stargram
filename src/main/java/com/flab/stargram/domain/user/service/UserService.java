@@ -27,7 +27,9 @@ public class UserService {
     public User signUp(SignUpRequestDto dto) {
         if (existsByUserName(dto)) {
             throw new DuplicateException(ApiResponseEnum.DUPLICATE_USERNAME);
-        } else if (existsByEmail(dto)) {
+        }
+
+        if (existsByEmail(dto)) {
             throw new DuplicateException(ApiResponseEnum.DUPLICATE_EMAIL);
         }
 
