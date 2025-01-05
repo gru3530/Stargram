@@ -1,4 +1,4 @@
-package com.flab.stargram.domain.user.service;
+package com.flab.stargram.domain.common.service;
 
 import java.util.Optional;
 

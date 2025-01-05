@@ -1,4 +1,4 @@
-package com.flab.stargram.domain.user.exception;
+package com.flab.stargram.domain.common.exception;
 
 import com.flab.stargram.domain.user.model.ApiResponseEnum;
 

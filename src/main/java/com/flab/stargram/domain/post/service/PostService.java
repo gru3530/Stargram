@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import com.flab.stargram.domain.post.model.Post;
 import com.flab.stargram.domain.post.model.PostRequestDto;
 import com.flab.stargram.domain.post.repository.PostRepository;
-import com.flab.stargram.domain.user.exception.UserNotFoundException;
+import com.flab.stargram.domain.common.exception.UserNotFoundException;
 import com.flab.stargram.domain.user.model.ApiResponseEnum;
-import com.flab.stargram.domain.user.service.CommonService;
+import com.flab.stargram.domain.common.service.CommonService;
 
 @Service
 public class PostService {

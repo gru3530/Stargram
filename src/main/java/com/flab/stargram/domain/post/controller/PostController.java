@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.stargram.domain.post.service.PostService;
 import com.flab.stargram.domain.post.model.PostRequestDto;
-import com.flab.stargram.domain.user.exception.EmptyInputException;
+import com.flab.stargram.domain.common.exception.EmptyInputException;
 import com.flab.stargram.domain.user.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.ApiResult;
 
@@ -30,6 +30,8 @@ public class PostController {
         } else if (dto.isContentEmpty()) {
             throw new EmptyInputException(ApiResponseEnum.EMPTY_CONTENT);
         }
+
+
 
         return ApiResult.success(postService.postFeed(dto));
     }

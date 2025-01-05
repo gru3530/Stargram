@@ -5,9 +5,10 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flab.stargram.domain.user.exception.DuplicateException;
-import com.flab.stargram.domain.user.exception.InvalidPasswordException;
-import com.flab.stargram.domain.user.exception.UserNotFoundException;
+import com.flab.stargram.domain.common.service.CommonService;
+import com.flab.stargram.domain.common.exception.DuplicateException;
+import com.flab.stargram.domain.common.exception.InvalidPasswordException;
+import com.flab.stargram.domain.common.exception.UserNotFoundException;
 import com.flab.stargram.domain.user.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;

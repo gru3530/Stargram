@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flab.stargram.domain.user.exception.EmptyInputException;
+import com.flab.stargram.domain.common.exception.EmptyInputException;
 import com.flab.stargram.domain.user.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
