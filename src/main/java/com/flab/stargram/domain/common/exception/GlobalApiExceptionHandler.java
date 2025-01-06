@@ -1,7 +1,7 @@
 package com.flab.stargram.domain.common.exception;
 
-import com.flab.stargram.domain.user.model.ApiResponseEnum;
-import com.flab.stargram.domain.user.model.ApiResult;
+import com.flab.stargram.domain.common.model.ApiResponseEnum;
+import com.flab.stargram.domain.common.model.ApiResult;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.stargram.domain.common.exception.EmptyInputException;
-import com.flab.stargram.domain.user.model.ApiResponseEnum;
+import com.flab.stargram.domain.common.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
-import com.flab.stargram.domain.user.model.ApiResult;
+import com.flab.stargram.domain.common.model.ApiResult;
 import com.flab.stargram.domain.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;

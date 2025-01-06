@@ -1,6 +1,6 @@
 package com.flab.stargram.domain.common.exception;
 
-import com.flab.stargram.domain.user.model.ApiResponseEnum;
+import com.flab.stargram.domain.common.model.ApiResponseEnum;
 
 public class BaseApiException extends RuntimeException {
     private final ApiResponseEnum responseEnum;

@@ -1,4 +1,4 @@
-package com.flab.stargram.domain.user.model;
+package com.flab.stargram.domain.common.model;
 
 public abstract class BaseDto {
     protected <T> boolean isFieldEmpty(T field) {

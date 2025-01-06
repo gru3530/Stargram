@@ -1,5 +1,7 @@
 package com.flab.stargram.domain.user.model;
 
+import com.flab.stargram.domain.common.model.BaseDto;
+
 import lombok.Getter;
 
 @Getter

@@ -1,6 +1,6 @@
 package com.flab.stargram.domain.post.model;
 
-import com.flab.stargram.domain.user.model.BaseDto;
+import com.flab.stargram.domain.common.model.BaseDto;
 
 import lombok.Getter;
 

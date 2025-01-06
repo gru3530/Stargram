@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.flab.stargram.domain.common.exception.DuplicateException;
 import com.flab.stargram.domain.common.exception.InvalidPasswordException;
 import com.flab.stargram.domain.common.exception.UserNotFoundException;
-import com.flab.stargram.domain.user.model.ApiResponseEnum;
+import com.flab.stargram.domain.common.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
 import com.flab.stargram.domain.user.model.User;
