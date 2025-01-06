@@ -14,15 +14,14 @@ import com.flab.stargram.domain.user.model.SignUpRequestDto;
 import com.flab.stargram.domain.user.model.ApiResult;
 import com.flab.stargram.domain.user.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
 	private final UserService userService;
-
-	public UserController(UserService userService) {
-		this.userService = userService;
-	}
 
 	@Transactional
 	@PostMapping("/signup")

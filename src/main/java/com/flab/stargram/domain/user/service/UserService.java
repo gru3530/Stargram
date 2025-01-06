@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flab.stargram.domain.common.service.CommonService;
 import com.flab.stargram.domain.common.exception.DuplicateException;
 import com.flab.stargram.domain.common.exception.InvalidPasswordException;
 import com.flab.stargram.domain.common.exception.UserNotFoundException;
@@ -14,14 +13,13 @@ import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
 import com.flab.stargram.domain.user.model.User;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    private final CommonService commonService;
-
-    public UserService(CommonService commonService) {
-        this.commonService = commonService;
-    }
+    private final UserQueryService userQueryService;
 
     @Transactional
     public User signUp(SignUpRequestDto dto) {
@@ -34,7 +32,7 @@ public class UserService {
         }
 
         User user = new User(dto);
-        commonService.save(user);
+        userQueryService.save(user);
         return user;
     }
 
@@ -57,14 +55,14 @@ public class UserService {
 
 
     private boolean existsByUserName(SignUpRequestDto dto) {
-        return commonService.existsByUserName(dto.getUserName());
+        return userQueryService.existsByUserName(dto.getUserName());
     }
 
     private boolean existsByEmail(SignUpRequestDto dto) {
-        return commonService.existsByEmail(dto.getEmail());
+        return userQueryService.existsByEmail(dto.getEmail());
     }
 
     private Optional<User> findByUsername(LoginDto dto) {
-        return commonService.findByUserName(dto.getUserName());
+        return userQueryService.findByUserName(dto.getUserName());
     }
 }

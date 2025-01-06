@@ -13,15 +13,15 @@ import com.flab.stargram.domain.common.exception.EmptyInputException;
 import com.flab.stargram.domain.user.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.ApiResult;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/posts")
+@RequiredArgsConstructor
+
 public class PostController {
 
     private final PostService postService;
-
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
 
     @Transactional
     @PostMapping
@@ -29,13 +29,12 @@ public class PostController {
         if (dto.isUserIdEmpty()) {
             throw new EmptyInputException(ApiResponseEnum.EMPTY_USERID);
         }
+
         if (dto.isContentEmpty()) {
             throw new EmptyInputException(ApiResponseEnum.EMPTY_CONTENT);
         }
 
         return ApiResult.success(postService.postFeed(dto));
     }
-
-
 
 }

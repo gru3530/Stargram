@@ -1,4 +1,4 @@
-package com.flab.stargram.domain.common.service;
+package com.flab.stargram.domain.user.service;
 
 import java.util.Optional;
 
@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CommonService {
+public class UserQueryService {
     private final UserRepository userRepository;
 
     public boolean existsByUserName(String userName) {

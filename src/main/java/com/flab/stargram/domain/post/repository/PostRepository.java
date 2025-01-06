@@ -7,5 +7,6 @@ import com.flab.stargram.domain.post.model.Post;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
+    //SELECT * FROM post WHERE postId = ?;
     boolean existsByPostId(Long postId);
 }

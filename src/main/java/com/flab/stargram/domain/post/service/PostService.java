@@ -4,20 +4,18 @@ import org.springframework.stereotype.Service;
 
 import com.flab.stargram.domain.post.model.Post;
 import com.flab.stargram.domain.post.model.PostRequestDto;
-import com.flab.stargram.domain.post.repository.PostRepository;
 import com.flab.stargram.domain.common.exception.UserNotFoundException;
 import com.flab.stargram.domain.user.model.ApiResponseEnum;
-import com.flab.stargram.domain.common.service.CommonService;
+import com.flab.stargram.domain.user.service.UserQueryService;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
-    private final PostRepository postRepository;
-    private final CommonService commonService;
 
-    public PostService(PostRepository postRepository, CommonService commonService) {
-        this.postRepository = postRepository;
-        this.commonService = commonService;
-    }
+    private final PostQueryService postQueryService;
+    private final UserQueryService userQueryService;
 
     public Post postFeed(PostRequestDto dto) {
         if (!findByUserId(dto)) {
@@ -25,11 +23,11 @@ public class PostService {
         }
 
         Post post = new Post(dto);
-        postRepository.save(post);
+        postQueryService.save(post);
         return post;
     }
 
     private boolean findByUserId(PostRequestDto dto) {
-        return commonService.findByUserId(dto.getUserId());
+        return userQueryService.findByUserId(dto.getUserId());
     }
 }
