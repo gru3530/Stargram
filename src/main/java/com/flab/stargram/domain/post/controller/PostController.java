@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.stargram.domain.post.service.PostService;
 import com.flab.stargram.domain.post.model.PostRequestDto;
-import com.flab.stargram.domain.common.exception.EmptyInputException;
+import com.flab.stargram.domain.common.exception.InvalidInputException;
 import com.flab.stargram.domain.common.model.ApiResponseEnum;
 import com.flab.stargram.domain.common.model.ApiResult;
 
@@ -27,11 +27,11 @@ public class PostController {
     @PostMapping
     public ResponseEntity<ApiResult> createPost(@RequestBody PostRequestDto dto) {
         if (dto.isUserIdEmpty()) {
-            throw new EmptyInputException(ApiResponseEnum.EMPTY_USERID);
+            throw new InvalidInputException(ApiResponseEnum.EMPTY_USERID);
         }
 
         if (dto.isContentEmpty()) {
-            throw new EmptyInputException(ApiResponseEnum.EMPTY_CONTENT);
+            throw new InvalidInputException(ApiResponseEnum.EMPTY_CONTENT);
         }
 
         return ApiResult.success(postService.postFeed(dto));

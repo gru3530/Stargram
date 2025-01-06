@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.flab.stargram.domain.post.model.Post;
 import com.flab.stargram.domain.post.model.PostRequestDto;
-import com.flab.stargram.domain.common.exception.UserNotFoundException;
+import com.flab.stargram.domain.common.exception.DataNotFoundException;
 import com.flab.stargram.domain.common.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.service.UserQueryService;
 
@@ -19,7 +19,7 @@ public class PostService {
 
     public Post postFeed(PostRequestDto dto) {
         if (!findByUserId(dto)) {
-            throw new UserNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
+            throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
         }
 
         Post post = new Post(dto);
