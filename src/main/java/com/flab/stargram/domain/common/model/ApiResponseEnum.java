@@ -16,6 +16,10 @@ public enum ApiResponseEnum {
 	INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 틀립니다"),
 	EMPTY_CONTENT(HttpStatus.BAD_REQUEST,"작성된 내용이 없습니다"),
 	EMPTY_USERID(HttpStatus.BAD_REQUEST,"유저ID가 비어있습니다"),
+	EMPTY_POSTID(HttpStatus.BAD_REQUEST, "PostId가 비어있습니다"),
+	POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 게시물을 찾을 수 없습니다"),
+	NESTED_COMMENT(HttpStatus.BAD_REQUEST,"대댓글을 작성할 수 없습니다"),
+	COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 댓글을 찾을 수 없습니다"),
 
 	FAILURE(HttpStatus.INTERNAL_SERVER_ERROR,"요청 처리중 작업에 실패하였습니다");
 
