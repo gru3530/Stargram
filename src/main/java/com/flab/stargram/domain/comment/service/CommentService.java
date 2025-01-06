@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CommentService {
 
-    private final CommentRepository commentRepository;
+    private final CommentQueryService commentQueryService;
     private final UserQueryService userQueryService;
     private final PostQueryService postQueryService;
 
@@ -37,7 +37,8 @@ public class CommentService {
         }
 
         Comment comment = new Comment(dto, userId);
-        return commentRepository.save(comment);
+        commentQueryService.save(comment);
+        return comment;
     }
 
     private boolean isUserIdValid(Long userId) {
@@ -49,7 +50,7 @@ public class CommentService {
     }
 
     private boolean isCommentValid(CommentRequestDto dto) {
-        Comment parentComment = commentRepository.findById(dto.getParentCommentId())
+        Comment parentComment = commentQueryService.findByCommentId(dto.getParentCommentId())
             .orElseThrow(() -> new DataNotFoundException(ApiResponseEnum.COMMENT_NOT_FOUND));
 
         return parentComment.getParentCommentId() != null;
