@@ -25,17 +25,17 @@ public class CommentController {
     private final CommentService commentService;
 
     @Transactional
-    @PostMapping("/{userid}/comments")
-    public ResponseEntity<ApiResult> createComment(@RequestBody CommentRequestDto dto, @PathVariable Long userid) {
-        if(dto.isPostIdEmpty()){
-            throw new InvalidInputException(ApiResponseEnum.EMPTY_POSTID);
+    @PostMapping("/{postId}/comment")
+    public ResponseEntity<ApiResult> createComment(@RequestBody CommentRequestDto dto, @PathVariable Long postId) {
+        if(dto.isUserIdEmpty()){
+            throw new InvalidInputException(ApiResponseEnum.EMPTY_USERID);
         }
 
         if(dto.isCommentEmpty()){
             throw new InvalidInputException(ApiResponseEnum.EMPTY_CONTENT);
         }
 
-        return ApiResult.success(commentService.addComment(dto,userid));
+        return ApiResult.success(commentService.addComment(dto,postId));
     }
 
 

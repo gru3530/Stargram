@@ -35,10 +35,10 @@ public class Comment{
     @CreatedDate
     private LocalDateTime createdAt;
 
-    public Comment(CommentRequestDto dto, Long userId) {
-        this.postId = dto.getPostId();
+    public Comment(CommentRequestDto dto, Long postId) {
+        this.postId = postId;
         this.comment = dto.getComment();
         this.parentCommentId = dto.getParentCommentId();
-        this.userId = userId;
+        this.userId = dto.getUserId();
     }
 }

@@ -23,12 +23,12 @@ public class CommentService {
     private final PostQueryService postQueryService;
 
     @Transactional
-    public Comment addComment(CommentRequestDto dto, Long userId) {
-        if(!isUserIdValid(userId)) {
+    public Comment addComment(CommentRequestDto dto, Long postId) {
+        if(!isUserIdValid(dto)) {
             throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
         }
 
-        if(!isPostIdValid(dto)){
+        if(!isPostIdValid(postId)){
             throw new DataNotFoundException(ApiResponseEnum.POST_NOT_FOUND);
         }
 
@@ -36,17 +36,17 @@ public class CommentService {
             throw new InvalidInputException(ApiResponseEnum.NESTED_COMMENT);
         }
 
-        Comment comment = new Comment(dto, userId);
+        Comment comment = new Comment(dto, postId);
         commentQueryService.save(comment);
         return comment;
     }
 
-    private boolean isUserIdValid(Long userId) {
-        return userQueryService.existByUserId(userId);
+    private boolean isUserIdValid(CommentRequestDto dto) {
+        return userQueryService.existByUserId(dto.getUserId());
     }
 
-    private boolean isPostIdValid(CommentRequestDto dto) {
-        return postQueryService.existsByPostId(dto.getPostId());
+    private boolean isPostIdValid(Long postId) {
+        return postQueryService.existsByPostId(postId);
     }
 
     private boolean isCommentValid(CommentRequestDto dto) {

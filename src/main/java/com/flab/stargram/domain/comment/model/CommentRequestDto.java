@@ -8,12 +8,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class CommentRequestDto extends BaseDto {
-    private Long postId;
+    private Long userId;
     private String comment;
     private Long parentCommentId;
 
-    public Boolean isPostIdEmpty() {
-        return isFieldEmpty(postId);
+    public Boolean isUserIdEmpty() {
+        return isFieldEmpty(userId);
     }
 
     public Boolean isCommentEmpty() {
