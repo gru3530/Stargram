@@ -50,10 +50,14 @@ public class CommentService {
     }
 
     private boolean isCommentValid(CommentRequestDto dto) {
+        if(dto.getParentCommentId() == null){
+            return true;
+        }
+
         Comment parentComment = commentQueryService.findByCommentId(dto.getParentCommentId())
             .orElseThrow(() -> new DataNotFoundException(ApiResponseEnum.COMMENT_NOT_FOUND));
 
-        return parentComment.getParentCommentId() != null;
+        return parentComment.getParentCommentId() == null;
     }
 
 
