@@ -16,7 +16,6 @@ import com.flab.stargram.domain.common.model.ApiResult;
 
 import lombok.RequiredArgsConstructor;
 
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/posts")
@@ -25,19 +24,33 @@ public class CommentController {
     private final CommentService commentService;
 
     @Transactional
-    @PostMapping("/{postId}/comment")
-    public ResponseEntity<ApiResult> createComment(@RequestBody CommentRequestDto dto, @PathVariable Long postId) {
-        if(dto.isUserIdEmpty()){
+    @PostMapping("/{postIdInput}/comment")
+    public ResponseEntity<ApiResult> createComment(@RequestBody CommentRequestDto dto, @PathVariable String postIdInput) {
+        Long postId = parsePostId(postIdInput);
+
+        if (dto.isUserIdEmpty()) {
             throw new InvalidInputException(ApiResponseEnum.EMPTY_USERID);
         }
 
-        if(dto.isCommentEmpty()){
+        if (dto.isCommentEmpty()) {
             throw new InvalidInputException(ApiResponseEnum.EMPTY_CONTENT);
         }
 
-        return ApiResult.success(commentService.addComment(dto,postId));
+        return ApiResult.success(commentService.addComment(dto, postId));
     }
 
+    private Long parsePostId(String postId) {
+        if (postId.isEmpty()) {
+            throw new InvalidInputException(ApiResponseEnum.EMPTY_POSTID);
+        }
+
+        try {
+            return Long.parseLong(postId);
+        } catch (NumberFormatException e) {
+            throw new InvalidInputException(ApiResponseEnum.INVALID_INPUT);
+        }
+
+    }
 
 }
 
