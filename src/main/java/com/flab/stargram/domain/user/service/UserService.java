@@ -1,84 +1,53 @@
 package com.flab.stargram.domain.user.service;
 
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.flab.stargram.domain.user.exception.DuplicateException;
+import com.flab.stargram.domain.user.exception.InvalidPasswordException;
+import com.flab.stargram.domain.user.exception.UserNotFoundException;
+import com.flab.stargram.domain.user.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
-import com.flab.stargram.domain.user.model.ApiResponse;
 import com.flab.stargram.domain.user.model.User;
-import com.flab.stargram.domain.user.repository.UserRepository;
 
 @Service
 public class UserService {
-	private final UserRepository userRepository;
 
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	private final CommonService commonService;
+
+
+	public UserService(CommonService commonService) {
+		this.commonService = commonService;
 	}
 
-	public ApiResponse signUp(SignUpRequestDto dto) {
-		if(UserValidator.isUserNameValid(dto.getUserName()) == false) {
-			return ApiResponse.EMPTY_USERNAME;
-		} else if (UserValidator.isEmailValid(dto.getEmail()) == false) {
-			return ApiResponse.EMPTY_EMAIL;
-		} else if(UserValidator.isPasswordValid(dto.getPassword()) == false) {
-			return ApiResponse.EMPTY_PASSWORD;
+	public User signUp(SignUpRequestDto dto) {
+		if (commonService.existsByUserName(dto)) {
+			throw new DuplicateException(ApiResponseEnum.DUPLICATE_USERNAME);
+		} else if (commonService.existsByEmail(dto)) {
+			throw new DuplicateException(ApiResponseEnum.DUPLICATE_EMAIL);
 		}
 
-		if (userRepository.existsByUserName(dto.getUserName())) {
-			return ApiResponse.DUPLICATE_USERNAME;
-		} else if (userRepository.existsByEmail(dto.getEmail())) {
-			return ApiResponse.DUPLICATE_EMAIL;
-		}
-
-		try {
-			User user = mapDtoToEntity(dto);
-			userRepository.save(user);
-			return ApiResponse.SUCCESS;
-		} catch (Exception e) {
-			return ApiResponse.FAILURE;
-		}
-	}
-
-	private User mapDtoToEntity(SignUpRequestDto dto) {
-		User user = new User();
-		user.setUserName(dto.getUserName());
-		user.setEmail(dto.getEmail());
-		user.setPassword(dto.getPassword());
-
-		Date date = new Date();
-		user.setCreatedAt(date);
-		user.setUpdatedAt(date);
+		User user = new User(dto);
+		commonService.save(user);
 		return user;
 	}
 
-	public ApiResponse login(LoginDto dto) {
-		if(UserValidator.isUserNameValid(dto.getUserName()) == false) {
-			return ApiResponse.EMPTY_USERNAME;
-		} else if(UserValidator.isPasswordValid(dto.getPassword()) == false) {
-			return ApiResponse.EMPTY_PASSWORD;
-		}
-
-		Optional<User> byUserName = userRepository.findByUserName(dto.getUserName());
+	public User login(LoginDto dto) {
+		Optional<User> byUserName = commonService.findByUserName(dto);
 		if (byUserName.isEmpty()) {
-			return ApiResponse.USER_NOT_FOUND;
+			throw new UserNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
 		}
 
 		User user = byUserName.get();
-		if (user.getPassword().equals(dto.getPassword()) == false) {
-			return ApiResponse.INVALID_PASSWORD;
+		if (!user.isCorrectPassword(dto)) {
+			throw new InvalidPasswordException(ApiResponseEnum.INVALID_PASSWORD);
 		}
 
-		try {
-			user.setLoginAt(new Date());
-			userRepository.save(user);
-			return ApiResponse.SUCCESS;
-		} catch (Exception e) {
-			return ApiResponse.FAILURE;
-		}
+		//로그인 시간 업데이트를 위해 save 할 경우 updateAt 변수도 변하기 때문에 다른방식을 생각해야함
+		commonService.save(user);
+		return user;
 
 	}
 }

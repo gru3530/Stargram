@@ -1,6 +1,9 @@
 package com.flab.stargram.domain.user.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,11 +26,23 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @CreatedDate
     @Column(nullable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
+    @LastModifiedDate
     @Column(nullable = false)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
-    private Date loginAt;
+    private LocalDateTime loggedInAt;
+
+    public User(SignUpRequestDto dto) {
+        this.userName = dto.getUserName();
+        this.email = dto.getEmail();
+        this.password = dto.getPassword();
+    }
+
+    public boolean isCorrectPassword(LoginDto dto){
+        return this.getPassword().equals(dto.getPassword());
+    }
 }
