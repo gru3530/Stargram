@@ -23,7 +23,6 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @Transactional
     @PostMapping("/{postIdInput}/comment")
     public ResponseEntity<ApiResult> createComment(@RequestBody CommentRequestDto dto, @PathVariable String postIdInput) {
         Long postId = parsePostId(postIdInput);

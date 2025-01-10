@@ -23,7 +23,6 @@ public class PostController {
 
     private final PostService postService;
 
-    @Transactional
     @PostMapping
     public ResponseEntity<ApiResult> createPost(@RequestBody PostRequestDto dto) {
         if (dto.isUserIdEmpty()) {

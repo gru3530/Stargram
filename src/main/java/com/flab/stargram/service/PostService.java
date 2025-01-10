@@ -1,6 +1,7 @@
 package com.flab.stargram.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.flab.stargram.entity.model.Post;
 import com.flab.stargram.entity.model.PostRequestDto;
@@ -17,6 +18,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserService userService;
 
+    @Transactional
     public Post postFeed(PostRequestDto dto) {
         if (!findByUserId(dto)) {
             throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);

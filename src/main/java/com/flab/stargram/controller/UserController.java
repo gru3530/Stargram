@@ -23,7 +23,6 @@ public class UserController {
 
 	private final UserService userService;
 
-	@Transactional
 	@PostMapping("/signup")
 	public ResponseEntity<ApiResult> signUp(@RequestBody SignUpRequestDto dto) {
 		if (dto.isUserNameEmpty()) {
@@ -41,7 +40,6 @@ public class UserController {
 		return ApiResult.success(userService.signUp(dto));
 	}
 
-	@Transactional
 	@PostMapping("/login")
 	public ResponseEntity<ApiResult> login(@RequestBody LoginDto dto) {
 		if (dto.isUserNameEmpty()) {
