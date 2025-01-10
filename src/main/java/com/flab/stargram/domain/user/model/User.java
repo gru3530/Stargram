@@ -4,13 +4,14 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.*;
 import lombok.*;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class User {
     @Id
@@ -27,11 +28,10 @@ public class User {
     private String password;
 
     @CreatedDate
-    @Column(nullable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(nullable = false)
     private LocalDateTime updatedAt;
 
     private LocalDateTime loggedInAt;
@@ -44,5 +44,9 @@ public class User {
 
     public boolean isCorrectPassword(LoginDto dto){
         return this.getPassword().equals(dto.getPassword());
+    }
+
+    public void recordSuccessfulLogin() {
+        this.loggedInAt = LocalDateTime.now();
     }
 }

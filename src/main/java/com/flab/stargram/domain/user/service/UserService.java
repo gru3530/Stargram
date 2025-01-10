@@ -3,51 +3,66 @@ package com.flab.stargram.domain.user.service;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.flab.stargram.domain.user.exception.DuplicateException;
-import com.flab.stargram.domain.user.exception.InvalidPasswordException;
-import com.flab.stargram.domain.user.exception.UserNotFoundException;
-import com.flab.stargram.domain.user.model.ApiResponseEnum;
+import com.flab.stargram.domain.common.exception.DuplicateException;
+import com.flab.stargram.domain.common.exception.InvalidPasswordException;
+import com.flab.stargram.domain.common.exception.UserNotFoundException;
+import com.flab.stargram.domain.common.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
 import com.flab.stargram.domain.user.model.User;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-	private final CommonService commonService;
+    private final UserQueryService userQueryService;
+
+    @Transactional
+    public User signUp(SignUpRequestDto dto) {
+        if (existsByUserName(dto)) {
+            throw new DuplicateException(ApiResponseEnum.DUPLICATE_USERNAME);
+        }
+
+        if (existsByEmail(dto)) {
+            throw new DuplicateException(ApiResponseEnum.DUPLICATE_EMAIL);
+        }
+
+        User user = new User(dto);
+        userQueryService.save(user);
+        return user;
+    }
+
+    @Transactional
+    public User login(LoginDto dto) {
+        Optional<User> byUserName = findByUsername(dto);
+        if (byUserName.isEmpty()) {
+            throw new UserNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
+        }
+
+        User user = byUserName.get();
+        if (!user.isCorrectPassword(dto)) {
+            throw new InvalidPasswordException(ApiResponseEnum.INVALID_PASSWORD);
+        }
+
+        user.recordSuccessfulLogin();
+        return user;
+    }
 
 
-	public UserService(CommonService commonService) {
-		this.commonService = commonService;
-	}
 
-	public User signUp(SignUpRequestDto dto) {
-		if (commonService.existsByUserName(dto)) {
-			throw new DuplicateException(ApiResponseEnum.DUPLICATE_USERNAME);
-		} else if (commonService.existsByEmail(dto)) {
-			throw new DuplicateException(ApiResponseEnum.DUPLICATE_EMAIL);
-		}
+    private boolean existsByUserName(SignUpRequestDto dto) {
+        return userQueryService.existsByUserName(dto.getUserName());
+    }
 
-		User user = new User(dto);
-		commonService.save(user);
-		return user;
-	}
+    private boolean existsByEmail(SignUpRequestDto dto) {
+        return userQueryService.existsByEmail(dto.getEmail());
+    }
 
-	public User login(LoginDto dto) {
-		Optional<User> byUserName = commonService.findByUserName(dto);
-		if (byUserName.isEmpty()) {
-			throw new UserNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
-		}
-
-		User user = byUserName.get();
-		if (!user.isCorrectPassword(dto)) {
-			throw new InvalidPasswordException(ApiResponseEnum.INVALID_PASSWORD);
-		}
-
-		//로그인 시간 업데이트를 위해 save 할 경우 updateAt 변수도 변하기 때문에 다른방식을 생각해야함
-		commonService.save(user);
-		return user;
-
-	}
+    private Optional<User> findByUsername(LoginDto dto) {
+        return userQueryService.findByUserName(dto.getUserName());
+    }
 }
