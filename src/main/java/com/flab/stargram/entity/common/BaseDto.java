@@ -10,4 +10,8 @@ public abstract class BaseDto {
         }
         return false;
     }
+
+    protected ValidationResult validationResult = new ValidationResult();
+
+    protected abstract ValidationResult validateEmpty();
 }

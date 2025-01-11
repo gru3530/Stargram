@@ -1,6 +1,8 @@
 package com.flab.stargram.entity.model;
 
+import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.BaseDto;
+import com.flab.stargram.entity.common.ValidationResult;
 
 import lombok.Getter;
 
@@ -10,11 +12,16 @@ public class CommentRequestDto extends BaseDto {
     private String comment;
     private Long parentCommentId;
 
-    public Boolean isUserIdEmpty() {
-        return isFieldEmpty(userId);
-    }
+    @Override
+    public ValidationResult validateEmpty() {
+        if (isFieldEmpty(userId)) {
+            validationResult.addError(ApiResponseEnum.EMPTY_USERID);
+        }
 
-    public Boolean isCommentEmpty() {
-        return isFieldEmpty(comment);
+        if (isFieldEmpty(comment)) {
+            validationResult.addError(ApiResponseEnum.EMPTY_CONTENT);
+        }
+
+        return validationResult;
     }
 }

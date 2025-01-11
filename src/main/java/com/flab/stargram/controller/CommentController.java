@@ -1,7 +1,6 @@
 package com.flab.stargram.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,16 +24,9 @@ public class CommentController {
 
     @PostMapping("/{postIdInput}/comment")
     public ResponseEntity<ApiResult> createComment(@RequestBody CommentRequestDto dto, @PathVariable String postIdInput) {
+        dto.validateEmpty().ifInvalidThrow();
+
         Long postId = parsePostId(postIdInput);
-
-        if (dto.isUserIdEmpty()) {
-            throw new InvalidInputException(ApiResponseEnum.EMPTY_USERID);
-        }
-
-        if (dto.isCommentEmpty()) {
-            throw new InvalidInputException(ApiResponseEnum.EMPTY_CONTENT);
-        }
-
         return ApiResult.success(commentService.addComment(dto, postId));
     }
 

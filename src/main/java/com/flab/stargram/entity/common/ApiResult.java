@@ -24,5 +24,4 @@ public class ApiResult {
 		ApiResult result = new ApiResult(apiResponseEnum, message, null);
 		return ResponseEntity.status(apiResponseEnum.getHttpStatus()).body(result);
 	}
-
 }

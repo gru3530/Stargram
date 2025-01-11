@@ -1,19 +1,26 @@
 package com.flab.stargram.entity.model;
 
+import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.BaseDto;
+import com.flab.stargram.entity.common.ValidationResult;
 
 import lombok.Getter;
 
 @Getter
 public class LoginDto extends BaseDto {
-	private String userName;
-	private String password;
+    private String userName;
+    private String password;
 
-	public boolean isUserNameEmpty() {
-		return isFieldEmpty(userName);
-	}
+    @Override
+    public ValidationResult validateEmpty() {
+        if (isFieldEmpty(userName)) {
+            validationResult.addError(ApiResponseEnum.EMPTY_USERNAME);
+        }
 
-	public boolean isPasswordEmpty() {
-		return isFieldEmpty(password);
-	}
+        if (isFieldEmpty(password)) {
+	        validationResult.addError(ApiResponseEnum.EMPTY_PASSWORD);
+        }
+
+		return validationResult;
+    }
 }
