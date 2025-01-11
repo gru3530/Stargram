@@ -30,6 +30,10 @@ public class UserQueryService {
         return userRepository.findById(userId).isPresent();
     }
 
+    public boolean existByUserId(Long userId) {
+        return userRepository.existsById(userId);
+    }
+
     public void save(User user){
         userRepository.save(user);
     }

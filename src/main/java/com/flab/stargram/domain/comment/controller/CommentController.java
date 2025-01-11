@@ -1,40 +1,46 @@
-package com.flab.stargram.domain.post.controller;
+package com.flab.stargram.domain.comment.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flab.stargram.domain.post.service.PostService;
-import com.flab.stargram.domain.post.model.PostRequestDto;
+import com.flab.stargram.domain.comment.model.CommentRequestDto;
+import com.flab.stargram.domain.comment.service.CommentService;
 import com.flab.stargram.domain.common.exception.InvalidInputException;
 import com.flab.stargram.domain.common.model.ApiResponseEnum;
 import com.flab.stargram.domain.common.model.ApiResult;
 
 import lombok.RequiredArgsConstructor;
 
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/posts")
-@RequiredArgsConstructor
+public class CommentController {
 
-public class PostController {
-
-    private final PostService postService;
+    private final CommentService commentService;
 
     @Transactional
-    @PostMapping
-    public ResponseEntity<ApiResult> createPost(@RequestBody PostRequestDto dto) {
-        if (dto.isUserIdEmpty()) {
+    @PostMapping("/{postId}/comment")
+    public ResponseEntity<ApiResult> createComment(@RequestBody CommentRequestDto dto, @PathVariable Long postId) {
+        if(dto.isUserIdEmpty()){
             throw new InvalidInputException(ApiResponseEnum.EMPTY_USERID);
         }
 
-        if (dto.isContentEmpty()) {
+        if(dto.isCommentEmpty()){
             throw new InvalidInputException(ApiResponseEnum.EMPTY_CONTENT);
         }
 
-        return ApiResult.success(postService.postFeed(dto));
+        return ApiResult.success(commentService.addComment(dto,postId));
     }
 
+
 }
+
+
+
+

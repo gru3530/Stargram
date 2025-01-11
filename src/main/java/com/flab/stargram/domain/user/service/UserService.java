@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.flab.stargram.domain.common.exception.DuplicateException;
 import com.flab.stargram.domain.common.exception.InvalidPasswordException;
-import com.flab.stargram.domain.common.exception.UserNotFoundException;
+import com.flab.stargram.domain.common.exception.DataNotFoundException;
 import com.flab.stargram.domain.common.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
@@ -40,7 +40,7 @@ public class UserService {
     public User login(LoginDto dto) {
         Optional<User> byUserName = findByUsername(dto);
         if (byUserName.isEmpty()) {
-            throw new UserNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
+            throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
         }
 
         User user = byUserName.get();

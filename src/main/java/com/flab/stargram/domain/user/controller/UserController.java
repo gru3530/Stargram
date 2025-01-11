@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.flab.stargram.domain.common.exception.EmptyInputException;
+import com.flab.stargram.domain.common.exception.InvalidInputException;
 import com.flab.stargram.domain.common.model.ApiResponseEnum;
 import com.flab.stargram.domain.user.model.LoginDto;
 import com.flab.stargram.domain.user.model.SignUpRequestDto;
@@ -27,15 +27,15 @@ public class UserController {
 	@PostMapping("/signup")
 	public ResponseEntity<ApiResult> signUp(@RequestBody SignUpRequestDto dto) {
 		if (dto.isUserNameEmpty()) {
-			throw new EmptyInputException(ApiResponseEnum.EMPTY_USERNAME);
+			throw new InvalidInputException(ApiResponseEnum.EMPTY_USERNAME);
 		}
 
 		if (dto.isEmailEmpty()) {
-			throw new EmptyInputException(ApiResponseEnum.EMPTY_EMAIL);
+			throw new InvalidInputException(ApiResponseEnum.EMPTY_EMAIL);
 		}
 
 		if (dto.isPasswordEmpty()) {
-			throw new EmptyInputException(ApiResponseEnum.EMPTY_PASSWORD);
+			throw new InvalidInputException(ApiResponseEnum.EMPTY_PASSWORD);
 		}
 
 		return ApiResult.success(userService.signUp(dto));
@@ -45,11 +45,11 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<ApiResult> login(@RequestBody LoginDto dto) {
 		if (dto.isUserNameEmpty()) {
-			throw new EmptyInputException(ApiResponseEnum.EMPTY_USERNAME);
+			throw new InvalidInputException(ApiResponseEnum.EMPTY_USERNAME);
 		}
 
 		if (dto.isPasswordEmpty()) {
-			throw new EmptyInputException(ApiResponseEnum.EMPTY_PASSWORD);
+			throw new InvalidInputException(ApiResponseEnum.EMPTY_PASSWORD);
 		}
 
 		return ApiResult.success(userService.login(dto));
