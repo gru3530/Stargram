@@ -24,9 +24,13 @@ public class Post extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
-    public Post(PostRequestDto dto) {
+    private Post(PostRequestDto dto) {
         this.userId = dto.getUserId();
         this.content = dto.getContent();
+    }
+
+    public static Post writePostOf(PostRequestDto dto) {
+        return new Post(dto);
     }
 
 }

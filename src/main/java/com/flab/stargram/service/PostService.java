@@ -24,7 +24,7 @@ public class PostService {
             throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
         }
 
-        Post post = new Post(dto);
+        Post post = Post.writePostOf(dto);
         postRepository.save(post);
         return post;
     }

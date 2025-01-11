@@ -29,10 +29,14 @@ public class Comment extends BaseEntity {
 
     private Long parentCommentId;
 
-    public Comment(CommentRequestDto dto, Long postId) {
+    private Comment(CommentRequestDto dto, Long postId) {
         this.postId = postId;
         this.comment = dto.getComment();
         this.parentCommentId = dto.getParentCommentId();
         this.userId = dto.getUserId();
+    }
+
+    public static Comment writeCommentOf(CommentRequestDto dto, Long postId) {
+        return new Comment(dto, postId);
     }
 }

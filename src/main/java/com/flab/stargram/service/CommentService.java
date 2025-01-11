@@ -35,7 +35,7 @@ public class CommentService {
             throw new InvalidInputException(ApiResponseEnum.NESTED_COMMENT);
         }
 
-        Comment comment = new Comment(dto, postId);
+        Comment comment = Comment.writeCommentOf(dto, postId);
         commentRepository.save(comment);
         return comment;
     }

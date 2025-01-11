@@ -26,10 +26,14 @@ public class User extends BaseEntity {
 
     private LocalDateTime loggedInAt;
 
-    public User(SignUpRequestDto dto) {
+    private User(SignUpRequestDto dto){
         this.userName = dto.getUserName();
         this.email = dto.getEmail();
         this.password = dto.getPassword();
+    }
+
+    public static User createUserOf(SignUpRequestDto dto){
+        return new User(dto);
     }
 
     public boolean isCorrectPassword(LoginDto dto){

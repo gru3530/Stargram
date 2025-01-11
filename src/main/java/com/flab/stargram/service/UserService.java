@@ -1,7 +1,5 @@
 package com.flab.stargram.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,27 +22,18 @@ public class UserService {
 
     @Transactional
     public User signUp(SignUpRequestDto dto) {
-        if (hasUserName(dto)) {
-            throw new DuplicateException(ApiResponseEnum.DUPLICATE_USERNAME);
-        }
+        checkUserDuplication(dto);
 
-        if (hasEmail(dto)) {
-            throw new DuplicateException(ApiResponseEnum.DUPLICATE_EMAIL);
-        }
-
-        User user = new User(dto);
+        User user = User.createUserOf(dto);
         userRepository.save(user);
         return user;
     }
 
+
     @Transactional
     public User login(LoginDto dto) {
-        Optional<User> byUserName = findByUsername(dto);
-        if (byUserName.isEmpty()) {
-            throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
-        }
+        User user = fetchUser(dto);
 
-        User user = byUserName.get();
         if (!user.isCorrectPassword(dto)) {
             throw new InvalidPasswordException(ApiResponseEnum.INVALID_PASSWORD);
         }
@@ -53,23 +42,38 @@ public class UserService {
         return user;
     }
 
-    public boolean hasUserName(String userName){
-        return userRepository.existsByUserName(userName);
+    private void checkUserDuplication(SignUpRequestDto dto) {
+        User existingUser = fetchExistingUser(dto);
+
+        if (existingUser != null) {
+            checkDuplicates(dto, existingUser);
+        }
     }
 
-    public boolean hasUserId(Long userId){
+    private void checkDuplicates(SignUpRequestDto dto, User existingUser) {
+        if (existingUser.getUserName().equals(dto.getUserName())) {
+            throw new DuplicateException(ApiResponseEnum.DUPLICATE_USERNAME);
+        }
+
+        if (existingUser.getEmail().equals(dto.getEmail())) {
+            throw new DuplicateException(ApiResponseEnum.DUPLICATE_EMAIL);
+        }
+    }
+
+    private User fetchExistingUser(SignUpRequestDto dto) {
+        return userRepository.findByUserNameOrEmail(dto.getUserName(), dto.getEmail());
+    }
+
+    private User fetchUser(LoginDto dto) {
+        User user = userRepository.findByUserName(dto.getUserName());
+        if (user == null) {
+            throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
+        }
+
+        return user;
+    }
+
+    public boolean hasUserId(Long userId) {
         return userRepository.existsById(userId);
-    }
-
-    private boolean hasUserName(SignUpRequestDto dto) {
-        return userRepository.existsByUserName(dto.getUserName());
-    }
-
-    private boolean hasEmail(SignUpRequestDto dto) {
-        return userRepository.existsByEmail(dto.getEmail());
-    }
-
-    private Optional<User> findByUsername(LoginDto dto) {
-        return userRepository.findByUserName(dto.getUserName());
     }
 }
