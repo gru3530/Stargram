@@ -3,6 +3,9 @@ package com.flab.stargram.entity.common;
 
 import com.flab.stargram.config.exception.InvalidInputException;
 
+import lombok.Getter;
+
+@Getter
 public class ValidationResult {
     private ApiResponseEnum error;
 

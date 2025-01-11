@@ -5,8 +5,10 @@ import com.flab.stargram.entity.common.BaseDto;
 import com.flab.stargram.entity.common.ValidationResult;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class LoginDto extends BaseDto {
     private String userName;
     private String password;
