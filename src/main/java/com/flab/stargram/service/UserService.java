@@ -29,7 +29,6 @@ public class UserService {
         return user;
     }
 
-
     @Transactional
     public User login(LoginDto dto) {
         User user = fetchUser(dto);
