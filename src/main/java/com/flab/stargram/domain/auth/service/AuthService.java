@@ -30,7 +30,7 @@ public class AuthService {
         Date date = new Date();
         return Jwts.builder()
             .subject(user.getId().toString())
-            .claim("id", user.getId())
+            .claim("userId", user.getId())
             .issuedAt(date)
             .expiration(new Date(date.getTime() + testJwtExpiration))
             .signWith(privateKey)
@@ -38,15 +38,11 @@ public class AuthService {
     }
 
     public Claims validateToken(String token) {
-        try {
-            return Jwts.parser()
-                .verifyWith(publicKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-        } catch (JwtException e) {
-            throw new IllegalStateException("Invalid Token", e);
-        }
+        return Jwts.parser()
+            .verifyWith(publicKey)
+            .build()
+            .parseSignedClaims(token)
+            .getPayload();
     }
 
 }

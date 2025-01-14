@@ -14,7 +14,6 @@ import com.flab.stargram.entity.common.ApiResult;
 import com.flab.stargram.entity.model.User;
 import com.flab.stargram.service.UserService;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -43,6 +42,12 @@ public class UserController {
 		authCookieService.addAuthCookie(response, token);
 
 		return ApiResult.success(user);
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<ApiResult> logout(HttpServletResponse response) {
+		authCookieService.removeAuthCookie(response);
+		return ApiResult.success(null);
 	}
 
 

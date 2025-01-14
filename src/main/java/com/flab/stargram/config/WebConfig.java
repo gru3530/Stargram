@@ -6,19 +6,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.flab.stargram.domain.auth.LoginCheckInterceptor;
+import com.flab.stargram.domain.auth.service.AuthInterceptorService;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
-    private final KeyPair keyPair;
 
-    public WebConfig(KeyPair keyPair) {
-        this.keyPair = keyPair;
-    }
+    private final AuthInterceptorService authInterceptorService;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheckInterceptor(keyPair))
+        registry.addInterceptor(authInterceptorService)
             .order(1)
             .addPathPatterns("/users/logout");
     }
