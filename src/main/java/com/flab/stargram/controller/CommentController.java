@@ -40,7 +40,6 @@ public class CommentController {
         } catch (NumberFormatException e) {
             throw new InvalidInputException(ApiResponseEnum.INVALID_INPUT);
         }
-
     }
 
 }
