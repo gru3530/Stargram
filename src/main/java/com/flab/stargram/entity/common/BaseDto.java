@@ -14,6 +14,10 @@ public abstract class BaseDto {
     }
 
     public static Long parseToLong(String value) {
+        if (value.isEmpty()) {
+            throw new InvalidInputException(ApiResponseEnum.INVALID_INPUT);
+        }
+
         try {
             return Long.parseLong(value);
         } catch (NumberFormatException e) {

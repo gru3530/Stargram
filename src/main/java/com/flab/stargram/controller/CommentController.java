@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.flab.stargram.entity.common.BaseDto;
 import com.flab.stargram.entity.model.CommentRequestDto;
 import com.flab.stargram.service.CommentService;
 import com.flab.stargram.config.exception.InvalidInputException;
@@ -26,22 +27,9 @@ public class CommentController {
     public ResponseEntity<ApiResult> createComment(@RequestBody CommentRequestDto dto, @PathVariable String postIdInput) {
         dto.validateEmpty().ifInvalidThrow();
 
-        Long postId = parsePostId(postIdInput);
+        Long postId = BaseDto.parseToLong(postIdInput);
         return ApiResult.success(commentService.addComment(dto, postId));
     }
-
-    private Long parsePostId(String postId) {
-        if (postId.isEmpty()) {
-            throw new InvalidInputException(ApiResponseEnum.EMPTY_POSTID);
-        }
-
-        try {
-            return Long.parseLong(postId);
-        } catch (NumberFormatException e) {
-            throw new InvalidInputException(ApiResponseEnum.INVALID_INPUT);
-        }
-    }
-
 }
 
 

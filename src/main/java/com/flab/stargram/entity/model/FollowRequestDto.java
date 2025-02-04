@@ -18,6 +18,4 @@ public class FollowRequestDto extends BaseDto {
         }
         return validationResult;
     }
-
-
 }

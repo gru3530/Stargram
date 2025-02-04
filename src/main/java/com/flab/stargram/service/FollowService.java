@@ -48,7 +48,4 @@ public class FollowService {
             throw new DuplicateException(ApiResponseEnum.ALREADY_FOLLOWING);
         }
     }
-
-
-
 }
