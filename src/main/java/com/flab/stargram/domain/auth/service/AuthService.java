@@ -1,45 +1,47 @@
 package com.flab.stargram.domain.auth.service;
 
-import org.springframework.stereotype.Service;
+import java.security.Key;
 
-import com.flab.stargram.domain.auth.util.AESUtil;
+import org.springframework.stereotype.Service;
 import com.flab.stargram.entity.model.User;
 
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Date;
 
-import javax.crypto.SecretKey;
-
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 
 @Service
 public class AuthService {
     private final long testJwtExpiration = 3600;
-    private final SecretKey aesKey;
+    private final PublicKey publicKey;
+    private final PrivateKey privateKey;
 
-    public AuthService() throws Exception {
-        this.aesKey = AESUtil.generateKey();
+    public AuthService(KeyPair keyPair) {
+        this.privateKey = keyPair.getPrivate();
+        this.publicKey = keyPair.getPublic();
     }
 
-    public String generateToken(User user){
+
+    public String generateToken(User user) {
         Date date = new Date();
-        String token = Jwts.builder()
+        return Jwts.builder()
             .subject(user.getId().toString())
             .claim("userId", user.getId())
             .issuedAt(date)
             .expiration(new Date(date.getTime() + testJwtExpiration))
-            .signWith(aesKey)
+            .signWith(privateKey)
             .compact();
-
-        return AESUtil.encrypt(token,aesKey);
     }
 
-    public Claims validateToken(String encryptedToken){
-        String decryptedJwt = AESUtil.decrypt(encryptedToken, aesKey);
+    public Claims validateToken(String token) {
         return Jwts.parser()
-            .verifyWith(aesKey)
+            .verifyWith(publicKey)
             .build()
-            .parseSignedClaims(decryptedJwt)
+            .parseSignedClaims(token)
             .getPayload();
     }
 
