@@ -16,7 +16,7 @@ import io.jsonwebtoken.Jwts;
 
 @Service
 public class AuthService {
-    private final long testJwtExpiration = 3600;
+    private final long testJwtExpiration = 3600 * 1000;
     private final PublicKey publicKey;
     private final PrivateKey privateKey;
 
@@ -24,7 +24,6 @@ public class AuthService {
         this.privateKey = keyPair.getPrivate();
         this.publicKey = keyPair.getPublic();
     }
-
 
     public String generateToken(User user) {
         Date date = new Date();
@@ -44,5 +43,4 @@ public class AuthService {
             .parseSignedClaims(token)
             .getPayload();
     }
-
 }

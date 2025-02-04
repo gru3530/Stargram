@@ -1,7 +1,5 @@
 package com.flab.stargram.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +33,7 @@ public class FollowService {
             followGroup = followGroupRepository.save(group);
         }
 
-        followRepository.save(Follow.create(followGroup, follow));
+        followRepository.save(Follow.createFollowOf(followGroup, follow));
     }
 
     @Transactional

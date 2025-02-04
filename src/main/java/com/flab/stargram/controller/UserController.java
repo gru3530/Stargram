@@ -18,7 +18,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -44,7 +43,7 @@ public class UserController {
 		return ApiResult.success(user);
 	}
 
-	@PostMapping("/logout")
+	@PostMapping("/users/logout")
 	public ResponseEntity<ApiResult> logout(HttpServletResponse response) {
 		authCookieService.removeAuthCookie(response);
 		return ApiResult.success(null);

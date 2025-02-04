@@ -58,6 +58,4 @@ public class CommentService {
 
         return parentComment.getParentCommentId() == null;
     }
-
-
 }

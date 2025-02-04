@@ -35,7 +35,7 @@ public class Follow extends BaseEntity {
         this.followingId = followingId;
     }
 
-    public static Follow create(FollowGroup followGroup, FollowPair followPair) {
+    public static Follow createFollowOf(FollowGroup followGroup, FollowPair followPair) {
         return new Follow(followGroup, followPair.getFollowerId(), followPair.getFollowingId());
     }
 }

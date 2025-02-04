@@ -6,6 +6,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +17,9 @@ public class AuthInterceptorService implements HandlerInterceptor {
     private final AuthService authService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader("Authorization");
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws
+        Exception {
+        String token = extractTokenFromCookies(request);
 
         if (token == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -34,4 +36,14 @@ public class AuthInterceptorService implements HandlerInterceptor {
         return true;
     }
 
+    private String extractTokenFromCookies(HttpServletRequest request) {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("Authorization".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
 }
