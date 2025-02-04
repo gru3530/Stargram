@@ -24,6 +24,7 @@ public enum ApiResponseEnum {
     EMPTY_FOLLOWING_ID(HttpStatus.BAD_REQUEST, "팔로우할 ID가 비어있습니다"),
     ALREADY_FOLLOWING(HttpStatus.BAD_REQUEST, "이미 팔로우 중입니다"),
     USER_NOT_FOLLOWED(HttpStatus.NOT_FOUND, "팔로우중이 아닌 유저입니다"),
+    FOLLOW_NOT_FOUND(HttpStatus.NOT_FOUND, "팔로우 정보를 찾을 수 없습니다"),
     FAILURE(HttpStatus.INTERNAL_SERVER_ERROR, "요청 처리중 작업에 실패하였습니다");
 
     private final String message;

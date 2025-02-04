@@ -10,6 +10,7 @@ import com.flab.stargram.config.exception.DuplicateException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.model.Follow;
 import com.flab.stargram.entity.model.FollowGroup;
+import com.flab.stargram.entity.model.FollowPair;
 import com.flab.stargram.repository.FollowGroupRepository;
 import com.flab.stargram.repository.FollowRepository;
 import com.flab.stargram.repository.UserRepository;
@@ -24,28 +25,56 @@ public class FollowService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void followUser(Long followerId, Long followingId) {
-        validateUserExists(followerId);
-        validateUserExists(followingId);
-        checkDuplicateFollow(followerId, followingId);
+    public void followUser(FollowPair follow) {
+        validateUserExists(follow);
+        checkDuplicateFollow(follow);
 
-        FollowGroup followGroup = followGroupRepository.findByUserId(followerId);
+        FollowGroup followGroup = getFollowGroup(follow);
         if (followGroup == null) {
-            followGroup = followGroupRepository.save(FollowGroup.create(followerId));
+            var group = FollowGroup.create(follow);
+            followGroup = followGroupRepository.save(group);
         }
 
-        followRepository.save(Follow.create(followGroup, followerId, followingId));
+        followRepository.save(Follow.create(followGroup, follow));
     }
 
-    private void validateUserExists(Long userId) {
-        if(!userRepository.existsById(userId)) {
+    @Transactional
+    public void unfollowUser(FollowPair followPair) {
+        validateUserExists(followPair);
+        validateFollowing(followPair);
+
+        unfollowAndSave(followPair);
+    }
+
+    private void unfollowAndSave(FollowPair followPair) {
+        followRepository.deleteByFollowerIdAndFollowingId(followPair.getFollowerId(), followPair.getFollowingId());
+    }
+
+    private void validateUserExists(FollowPair followPair) {
+        if (!userRepository.existsById(followPair.getFollowerId()) ||
+            !userRepository.existsById(followPair.getFollowingId())) {
             throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
         }
     }
 
-    private void checkDuplicateFollow(Long followerId, Long followingId) {
-        if (followRepository.existsByFollowerIdAndFollowingId(followerId, followingId)) {
+    private void checkDuplicateFollow(FollowPair followPair) {
+        if (isfollowExists(followPair)) {
             throw new DuplicateException(ApiResponseEnum.ALREADY_FOLLOWING);
+        }
+    }
+
+    private boolean isfollowExists(FollowPair followPair) {
+        return followRepository.existsByFollowerIdAndFollowingId(followPair.getFollowerId(),
+            followPair.getFollowingId());
+    }
+
+    private FollowGroup getFollowGroup(FollowPair followPair) {
+        return followGroupRepository.findByUserId(followPair.getFollowerId());
+    }
+
+    private void validateFollowing(FollowPair followPair) {
+        if (!isfollowExists(followPair)) {
+            throw new DataNotFoundException(ApiResponseEnum.FOLLOW_NOT_FOUND);
         }
     }
 }
