@@ -24,16 +24,16 @@ public class FollowGroup {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private Long userId;
+    private Long followingId;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
-    private FollowGroup(Long userId) {
-        this.userId = userId;
+    private FollowGroup(Long followingId) {
+        this.followingId = followingId;
     }
 
-    public static FollowGroup create(FollowPair pair) {
-        return new FollowGroup(pair.getFollowerId());
+    public static FollowGroup create(long followerId) {
+        return new FollowGroup(followerId);
     }
 }

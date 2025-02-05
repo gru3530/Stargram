@@ -16,6 +16,7 @@ public class FollowRequestDto extends BaseDto {
         if (isFieldEmpty(followingId)) {
             validationResult.addError(ApiResponseEnum.EMPTY_FOLLOWING_ID);
         }
+
         return validationResult;
     }
 }
