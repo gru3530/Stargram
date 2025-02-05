@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.stargram.service.PostService;
-import com.flab.stargram.entity.model.PostRequestDto;
+import com.flab.stargram.entity.dto.PostRequestDto;
 import com.flab.stargram.entity.common.ApiResult;
 
 import lombok.RequiredArgsConstructor;

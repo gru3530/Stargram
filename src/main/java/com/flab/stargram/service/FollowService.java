@@ -9,7 +9,7 @@ import com.flab.stargram.config.exception.DataNotFoundException;
 import com.flab.stargram.config.exception.DuplicateException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.model.Follow;
-import com.flab.stargram.entity.model.FollowPair;
+import com.flab.stargram.entity.dto.FollowPair;
 import com.flab.stargram.repository.FollowRepository;
 
 import lombok.RequiredArgsConstructor;

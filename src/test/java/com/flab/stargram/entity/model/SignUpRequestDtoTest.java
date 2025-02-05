@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.ValidationResult;
+import com.flab.stargram.entity.dto.SignUpRequestDto;
 
 class SignUpRequestDtoTest {
 

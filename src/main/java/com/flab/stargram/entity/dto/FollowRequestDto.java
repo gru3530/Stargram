@@ -1,6 +1,5 @@
-package com.flab.stargram.entity.model;
+package com.flab.stargram.entity.dto;
 
-import com.flab.stargram.config.exception.InvalidInputException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.BaseDto;
 import com.flab.stargram.entity.common.ValidationResult;

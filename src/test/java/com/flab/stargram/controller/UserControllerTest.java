@@ -9,8 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.flab.stargram.entity.model.LoginDto;
-import com.flab.stargram.entity.model.SignUpRequestDto;
+import com.flab.stargram.entity.dto.LoginDto;
+import com.flab.stargram.entity.dto.SignUpRequestDto;
 import com.flab.stargram.entity.model.User;
 import com.flab.stargram.service.UserService;
 

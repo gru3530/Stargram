@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flab.stargram.entity.model.Comment;
-import com.flab.stargram.entity.model.CommentRequestDto;
+import com.flab.stargram.entity.dto.CommentRequestDto;
 import com.flab.stargram.config.exception.DataNotFoundException;
 import com.flab.stargram.config.exception.InvalidInputException;
 import com.flab.stargram.entity.common.ApiResponseEnum;

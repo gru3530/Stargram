@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.stargram.entity.common.ApiResult;
-import com.flab.stargram.entity.common.BaseDto;
 import com.flab.stargram.entity.common.ParseUtil;
-import com.flab.stargram.entity.model.FollowPair;
-import com.flab.stargram.entity.model.FollowRequestDto;
+import com.flab.stargram.entity.dto.FollowPair;
+import com.flab.stargram.entity.dto.FollowRequestDto;
 import com.flab.stargram.service.FollowService;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +45,5 @@ public class FollowController {
         Long userId = ParseUtil.parseToLong(inputUserId);
 
         return ApiResult.success(followService.getFollowers(userId));
-
     }
 }

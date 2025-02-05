@@ -1,4 +1,4 @@
-package com.flab.stargram.entity.model;
+package com.flab.stargram.entity.dto;
 
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.BaseDto;
@@ -9,8 +9,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginDto extends BaseDto {
+public class SignUpRequestDto extends BaseDto {
     private String userName;
+    private String email;
     private String password;
 
     @Override
@@ -19,10 +20,14 @@ public class LoginDto extends BaseDto {
             validationResult.addError(ApiResponseEnum.EMPTY_USERNAME);
         }
 
-        if (isFieldEmpty(password)) {
-	        validationResult.addError(ApiResponseEnum.EMPTY_PASSWORD);
+        if (isFieldEmpty(email)) {
+            validationResult.addError(ApiResponseEnum.EMPTY_EMAIL);
         }
 
-		return validationResult;
+        if (isFieldEmpty(password)) {
+            validationResult.addError(ApiResponseEnum.EMPTY_PASSWORD);
+        }
+
+        return validationResult;
     }
 }

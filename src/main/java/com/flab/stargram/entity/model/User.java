@@ -3,6 +3,8 @@ package com.flab.stargram.entity.model;
 import java.time.LocalDateTime;
 
 import com.flab.stargram.entity.common.BaseEntity;
+import com.flab.stargram.entity.dto.LoginDto;
+import com.flab.stargram.entity.dto.SignUpRequestDto;
 
 import jakarta.persistence.*;
 import lombok.*;

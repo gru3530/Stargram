@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flab.stargram.entity.model.Post;
-import com.flab.stargram.entity.model.PostRequestDto;
+import com.flab.stargram.entity.dto.PostRequestDto;
 import com.flab.stargram.config.exception.DataNotFoundException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.repository.PostRepository;

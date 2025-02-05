@@ -1,4 +1,4 @@
-package com.flab.stargram.entity.model;
+package com.flab.stargram.entity.dto;
 
 import lombok.Getter;
 
