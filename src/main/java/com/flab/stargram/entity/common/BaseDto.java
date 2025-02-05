@@ -13,18 +13,6 @@ public abstract class BaseDto {
         return false;
     }
 
-    public static Long parseToLong(String value) {
-        if (value.isEmpty()) {
-            throw new InvalidInputException(ApiResponseEnum.INVALID_INPUT);
-        }
-
-        try {
-            return Long.parseLong(value);
-        } catch (NumberFormatException e) {
-            throw new InvalidInputException(ApiResponseEnum.INVALID_INPUT);
-        }
-    }
-
     protected ValidationResult validationResult = new ValidationResult();
 
     protected abstract ValidationResult validateEmpty();
