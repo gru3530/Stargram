@@ -3,14 +3,12 @@ package com.flab.stargram.entity.common;
 import com.flab.stargram.config.exception.InvalidInputException;
 
 public class ParseUtil {
-    public static Long parseToLong(String value) {
-        if (value.isEmpty()) {
-            throw new InvalidInputException(ApiResponseEnum.INVALID_INPUT);
-        }
+    private static final String parseLongRegex = "^[0-9]+$";
 
-        try {
+    public static Long parseToLong(String value) {
+        if (value.matches(parseLongRegex)) {
             return Long.parseLong(value);
-        } catch (NumberFormatException e) {
+        } else {
             throw new InvalidInputException(ApiResponseEnum.INVALID_INPUT);
         }
     }

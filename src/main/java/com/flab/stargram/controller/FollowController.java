@@ -25,7 +25,7 @@ public class FollowController {
     @PostMapping("/follow")
     public ResponseEntity<ApiResult> followUser(@RequestBody FollowRequestDto dto, @PathVariable String inputUserId) {
         dto.validateEmpty().ifInvalidThrow();
-        FollowPair followPair = FollowPair.createFollowPairOf(ParseUtil.parseToLong(inputUserId), dto.getFollowingId());
+        FollowPair followPair = FollowPair.createFollowPairOf(inputUserId, dto);
 
         followService.followUser(followPair);
         return ApiResult.success(null);
@@ -34,7 +34,7 @@ public class FollowController {
     @PostMapping("/unfollow")
     public ResponseEntity<ApiResult> unfollowUser(@RequestBody FollowRequestDto dto, @PathVariable String inputUserId) {
         dto.validateEmpty().ifInvalidThrow();
-        FollowPair followPair = FollowPair.createFollowPairOf(ParseUtil.parseToLong(inputUserId), dto.getFollowingId());
+        FollowPair followPair = FollowPair.createFollowPairOf(inputUserId, dto);
 
         followService.unfollowUser(followPair);
         return ApiResult.success(null);
