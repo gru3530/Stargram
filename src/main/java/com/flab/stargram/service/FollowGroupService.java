@@ -13,11 +13,11 @@ public class FollowGroupService {
     private final FollowGroupRepository followGroupRepository;
 
     public boolean hasFollow(Long userId) {
-        return followGroupRepository.existsByUserId(userId);
+        return followGroupRepository.existsByFollowingId(userId);
     }
 
     public FollowGroup getOrCreateFollowGroup(long followingId) {
-        FollowGroup followGroup = followGroupRepository.findByUserId(followingId);
+        FollowGroup followGroup = followGroupRepository.findByFollowingId(followingId);
         if (followGroup == null) {
             followGroup = createFollowGroup(followingId);
         }

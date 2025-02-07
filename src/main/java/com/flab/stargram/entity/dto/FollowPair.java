@@ -2,8 +2,10 @@ package com.flab.stargram.entity.dto;
 
 import com.flab.stargram.entity.common.ParseUtil;
 
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @Getter
 public class FollowPair {
     private Long followerId;

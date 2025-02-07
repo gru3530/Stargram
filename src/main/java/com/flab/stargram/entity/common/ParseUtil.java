@@ -6,6 +6,8 @@ public class ParseUtil {
     private static final String parseLongRegex = "^[0-9]+$";
 
     public static Long parseToLong(String value) {
+        assert value != null : "Input value is null";
+
         if (value.matches(parseLongRegex)) {
             return Long.parseLong(value);
         } else {
