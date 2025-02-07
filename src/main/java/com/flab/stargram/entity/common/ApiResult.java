@@ -24,4 +24,9 @@ public class ApiResult {
 		ApiResult result = new ApiResult(apiResponseEnum, message, null);
 		return ResponseEntity.status(apiResponseEnum.getHttpStatus()).body(result);
 	}
+
+	public static ResponseEntity<ApiResult> error(ApiResponseEnum apiResponseEnum, String message, Object detail) {
+		ApiResult result = new ApiResult(apiResponseEnum, message, detail);
+		return ResponseEntity.status(apiResponseEnum.getHttpStatus()).body(result);
+	}
 }

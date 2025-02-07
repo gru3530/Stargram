@@ -1,21 +1,13 @@
 package com.flab.stargram.entity.dto;
 
-import com.flab.stargram.entity.common.ApiResponseEnum;
-import com.flab.stargram.entity.common.BaseDto;
-import com.flab.stargram.entity.common.ValidationResult;
-
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 
 @Getter
-public class FollowRequestDto extends BaseDto {
+public class FollowRequestDto {
+    @NotNull(message = "팔로우할 사용자 ID는 필수 입니다.")
+    @Positive(message = "사용자 ID는 양수로 입력해야 합니다.")
     private Long followingId;
-
-    @Override
-    public ValidationResult validateEmpty() {
-        if (isFieldEmpty(followingId)) {
-            validationResult.addError(ApiResponseEnum.EMPTY_FOLLOWING_ID);
-        }
-
-        return validationResult;
-    }
 }
