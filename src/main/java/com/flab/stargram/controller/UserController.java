@@ -25,7 +25,7 @@ public class UserController {
 	private final AuthCookieService authCookieService;
 
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResult> signUp(@RequestBody SignUpRequestDto dto, HttpServletResponse response) {
+	public ResponseEntity<ApiResult> signUp(@RequestBody SignUpRequestDto dto) {
 		dto.validateEmpty().ifInvalidThrow();
 
 		return ApiResult.success(userService.signUp(dto));
