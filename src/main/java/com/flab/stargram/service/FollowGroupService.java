@@ -3,6 +3,7 @@ package com.flab.stargram.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flab.stargram.entity.dto.FollowDto;
 import com.flab.stargram.entity.model.FollowGroup;
 import com.flab.stargram.repository.FollowGroupRepository;
 
@@ -18,16 +19,16 @@ public class FollowGroupService {
     }
 
     @Transactional
-    public FollowGroup getOrCreateFollowGroup(long followingId) {
-        FollowGroup followGroup = followGroupRepository.findByFollowingId(followingId);
+    public FollowGroup getOrCreateFollowGroup(FollowDto followDto) {
+        FollowGroup followGroup = followGroupRepository.findByFollowingId(followDto.getFollowingId());
         if (followGroup == null) {
-            followGroup = createFollowGroup(followingId);
+            followGroup = createFollowGroup(followDto);
         }
         return followGroup;
     }
 
-    private FollowGroup createFollowGroup(long followingId) {
-        FollowGroup followGroup = FollowGroup.create(followingId);
+    private FollowGroup createFollowGroup(FollowDto followDto) {
+        FollowGroup followGroup = FollowGroup.create(followDto.getFollowingId());
         return followGroupRepository.save(followGroup);
     }
 }

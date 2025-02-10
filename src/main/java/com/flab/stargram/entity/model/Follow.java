@@ -1,7 +1,7 @@
 package com.flab.stargram.entity.model;
 
 import com.flab.stargram.entity.common.BaseEntity;
-import com.flab.stargram.entity.dto.FollowPair;
+import com.flab.stargram.entity.dto.FollowDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +36,7 @@ public class Follow extends BaseEntity {
         this.followingId = followingId;
     }
 
-    public static Follow createFollowOf(FollowGroup followGroup, FollowPair followPair) {
-        return new Follow(followGroup, followPair.getFollowerId(), followPair.getFollowingId());
+    public static Follow createFollowOf(FollowGroup followGroup, FollowDto followDto) {
+        return new Follow(followGroup, followDto.getFollowerId(), followDto.getFollowingId());
     }
 }

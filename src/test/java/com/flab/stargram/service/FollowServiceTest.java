@@ -1,6 +1,5 @@
 package com.flab.stargram.service;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,10 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.flab.stargram.entity.dto.FollowPair;
+import com.flab.stargram.entity.dto.FollowDto;
 import com.flab.stargram.entity.model.Follow;
 import com.flab.stargram.entity.model.FollowGroup;
-import com.flab.stargram.repository.FollowGroupRepository;
 import com.flab.stargram.repository.FollowRepository;
 
 class FollowServiceTest {
@@ -34,18 +32,18 @@ class FollowServiceTest {
     @Test
     void followUser() {
         //given
-        FollowPair followPair = FollowPair.builder()
+        FollowDto followDto = FollowDto.builder()
             .followingId(1L)
             .followerId(2L)
             .build();
 
         //when
-        when(userService.hasUserId(followPair.getFollowerId())).thenReturn(true);
-        when(userService.hasUserId(followPair.getFollowingId())).thenReturn(true);
-        when(followGroupService.getOrCreateFollowGroup(followPair.getFollowingId())).thenReturn(mock(FollowGroup.class));
-        when(followRepository.existsByFollowerIdAndFollowingId(followPair.getFollowerId(), followPair.getFollowingId())).thenReturn(false);
+        when(userService.hasUserId(followDto.getFollowerId())).thenReturn(true);
+        when(userService.hasUserId(followDto.getFollowingId())).thenReturn(true);
+        when(followGroupService.getOrCreateFollowGroup(followDto)).thenReturn(mock(FollowGroup.class));
+        when(followRepository.existsByFollowerIdAndFollowingId(followDto.getFollowerId(), followDto.getFollowingId())).thenReturn(false);
 
-        followService.followUser(followPair);
+        followService.followUser(followDto);
 
         //then
         verify(followRepository, times(1)).save(any(Follow.class));

@@ -11,37 +11,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.stargram.entity.common.ApiResult;
 import com.flab.stargram.entity.common.ParseUtil;
-import com.flab.stargram.entity.dto.FollowPair;
-import com.flab.stargram.entity.dto.FollowRequestDto;
+import com.flab.stargram.entity.dto.FollowDto;
 import com.flab.stargram.service.FollowService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/users/{inputUserId}")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 @Validated
 public class FollowController {
     private final FollowService followService;
 
     @PostMapping("/follow")
-    public ResponseEntity<ApiResult> followUser(@Valid @RequestBody FollowRequestDto dto, @PathVariable String inputUserId) {
-        FollowPair followPair = FollowPair.createFollowPairOf(inputUserId, dto);
-
-        followService.followUser(followPair);
+    public ResponseEntity<ApiResult> followUser(@Valid @RequestBody FollowDto dto) {
+        followService.followUser(dto);
         return ApiResult.success(null);
     }
 
     @PostMapping("/unfollow")
-    public ResponseEntity<ApiResult> unfollowUser(@Valid @RequestBody FollowRequestDto dto, @PathVariable String inputUserId) {
-        FollowPair followPair = FollowPair.createFollowPairOf(inputUserId, dto);
-
-        followService.unfollowUser(followPair);
+    public ResponseEntity<ApiResult> unfollowUser(@Valid @RequestBody FollowDto dto) {
+        followService.unfollowUser(dto);
         return ApiResult.success(null);
     }
 
-    @GetMapping("/followers")
+    @GetMapping("/{inputUserId}/followers")
     public ResponseEntity<ApiResult> followUsers(@PathVariable String inputUserId) {
         Long userId = ParseUtil.parseToLong(inputUserId);
 
