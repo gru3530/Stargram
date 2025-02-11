@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.flab.stargram.config.exception.BaseApiException;
 import com.flab.stargram.config.exception.DataNotFoundException;
 import com.flab.stargram.config.exception.InvalidPasswordException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
