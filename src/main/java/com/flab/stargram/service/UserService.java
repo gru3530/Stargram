@@ -7,8 +7,8 @@ import com.flab.stargram.config.exception.DuplicateException;
 import com.flab.stargram.config.exception.InvalidPasswordException;
 import com.flab.stargram.config.exception.DataNotFoundException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
-import com.flab.stargram.entity.model.LoginDto;
-import com.flab.stargram.entity.model.SignUpRequestDto;
+import com.flab.stargram.entity.dto.LoginDto;
+import com.flab.stargram.entity.dto.SignUpRequestDto;
 import com.flab.stargram.entity.model.User;
 import com.flab.stargram.repository.UserRepository;
 
@@ -28,7 +28,6 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
-
 
     @Transactional
     public User login(LoginDto dto) {

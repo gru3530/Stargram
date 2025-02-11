@@ -1,5 +1,7 @@
 package com.flab.stargram.entity.common;
 
+import com.flab.stargram.config.exception.InvalidInputException;
+
 public abstract class BaseDto {
     protected <T> boolean isFieldEmpty(T field) {
         if (field == null) {

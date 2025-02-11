@@ -1,12 +1,12 @@
 package com.flab.stargram.entity.model;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.ValidationResult;
+import com.flab.stargram.entity.dto.LoginDto;
 
 class LoginDtoTest {
 

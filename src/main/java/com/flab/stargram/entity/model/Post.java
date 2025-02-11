@@ -1,6 +1,7 @@
 package com.flab.stargram.entity.model;
 
 import com.flab.stargram.entity.common.BaseEntity;
+import com.flab.stargram.entity.dto.PostRequestDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

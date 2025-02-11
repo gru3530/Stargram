@@ -21,6 +21,10 @@ public enum ApiResponseEnum {
     NESTED_COMMENT(HttpStatus.BAD_REQUEST, "대댓글을 작성할 수 없습니다"),
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 댓글을 찾을 수 없습니다"),
 	INVALID_INPUT(HttpStatus.BAD_REQUEST, "잘못된 입력입니다"),
+    EMPTY_FOLLOWING_ID(HttpStatus.BAD_REQUEST, "팔로우할 ID가 비어있습니다"),
+    ALREADY_FOLLOWING(HttpStatus.BAD_REQUEST, "이미 팔로우 중입니다"),
+    USER_NOT_FOLLOWED(HttpStatus.NOT_FOUND, "팔로우중이 아닌 유저입니다"),
+    FOLLOW_NOT_FOUND(HttpStatus.NOT_FOUND, "팔로우 정보를 찾을 수 없습니다"),
     FAILURE(HttpStatus.INTERNAL_SERVER_ERROR, "요청 처리중 작업에 실패하였습니다");
 
     private final String message;
