@@ -2,13 +2,14 @@ package com.flab.stargram.entity.dto;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.flab.stargram.entity.common.ApiResponseEnum;
-import com.flab.stargram.entity.common.ValidationResult;
+import jakarta.validation.ConstraintViolation;
 
-class LoginDtoTest {
+class LoginDtoTest extends ValidatorTest {
     @DisplayName("userName에 빈 데이터 입력한 경우 에러 반환")
     @Test
     void validateDtoEmpty_errorEmptyuserName() {
@@ -19,11 +20,11 @@ class LoginDtoTest {
             .build();
 
         // When
-        ValidationResult result = dto.validateEmpty();
+        Set<ConstraintViolation<LoginDto>> violations = validator.validate(dto);
 
         // Then
-        assertThat(result.isValid()).isFalse();
-        assertThat(result.getError()).isEqualTo(ApiResponseEnum.EMPTY_USERNAME);
+        assertThat(violations).isNotEmpty();
+        assertThat(violations.iterator().next().getMessage()).isEqualTo("userName은 비어 있을 수 없습니다.");
     }
 
     @DisplayName("userName에 null 입력한 경우 에러 반환")
@@ -36,13 +37,12 @@ class LoginDtoTest {
             .build();
 
         // When
-        ValidationResult result = dto.validateEmpty();
+        Set<ConstraintViolation<LoginDto>> violations = validator.validate(dto);
 
         // Then
-        assertThat(result.isValid()).isFalse();
-        assertThat(result.getError()).isEqualTo(ApiResponseEnum.EMPTY_USERNAME);
+        assertThat(violations).isNotEmpty();
+        assertThat(violations.iterator().next().getMessage()).isEqualTo("userName은 비어 있을 수 없습니다.");
     }
-
 
     @DisplayName("비밀번호 비어있는 데이터 입력한 경우 에러 반환")
     @Test
@@ -54,11 +54,11 @@ class LoginDtoTest {
             .build();
 
         // When
-        ValidationResult result = dto.validateEmpty();
+        Set<ConstraintViolation<LoginDto>> violations = validator.validate(dto);
 
         // Then
-        assertThat(result.isValid()).isFalse();
-        assertThat(result.getError()).isEqualTo(ApiResponseEnum.EMPTY_PASSWORD);
+        assertThat(violations).isNotEmpty();
+        assertThat(violations.iterator().next().getMessage()).isEqualTo("password는 비어 있을 수 없습니다.");
     }
 
     @DisplayName("정상 케이스")
@@ -71,9 +71,9 @@ class LoginDtoTest {
             .build();
 
         // When
-        ValidationResult result = dto.validateEmpty();
+        Set<ConstraintViolation<LoginDto>> violations = validator.validate(dto);
 
         // Then
-        assertThat(result.isValid()).isTrue();
+        assertThat(violations).isEmpty();
     }
 }

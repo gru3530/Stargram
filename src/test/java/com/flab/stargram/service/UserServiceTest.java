@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.flab.stargram.config.exception.DataNotFoundException;
+import com.flab.stargram.config.exception.DuplicateException;
 import com.flab.stargram.config.exception.InvalidPasswordException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.dto.LoginDto;
@@ -43,8 +44,71 @@ class UserServiceTest {
         mockUser = User.createUserOf(signUpRequestDto);
     }
 
+    @DisplayName("정상 회원가입")
+    @Test
+    void signup(){
+        // Given
+        SignUpRequestDto dto = SignUpRequestDto.builder()
+            .userName("gru")
+            .password("asdf")
+            .email("gru@f-lab.com")
+            .build();
 
-    @DisplayName("정상 로그인 테스트")
+        //when
+        when(userRepository.findByUserNameOrEmail(dto.getUserName(), dto.getEmail())).thenReturn(null);
+        User mockUser = User.createUserOf(signUpRequestDto);
+        when(userRepository.save(any(User.class))).thenReturn(mockUser);
+
+        User result = userService.signUp(dto);
+
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(mockUser);
+    }
+
+    @DisplayName("중복된 사용자명 회원가입 시 에러 반환 테스트")
+    @Test
+    void signUp_error_duplicateUserName() {
+        // Given
+        SignUpRequestDto dto = SignUpRequestDto.builder()
+            .userName(mockUser.getUserName())
+            .password("asdf")
+            .email("gru@f-lab.com")
+            .build();
+
+        // When
+        when(userRepository.findByUserNameOrEmail(dto.getUserName(), dto.getEmail())).thenReturn(mockUser);
+
+        // Then
+        DuplicateException exception = assertThrows(DuplicateException.class, () -> userService.signUp(dto));
+        assertThat(exception.getResponseEnum()).isEqualTo(ApiResponseEnum.DUPLICATE_USERNAME);
+
+        verify(userRepository, times(1)).findByUserNameOrEmail(dto.getUserName(), dto.getEmail());
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @DisplayName("중복된 email 회원가입 시 에러 반환 테스트")
+    @Test
+    void signup_error_invalidEmail() {
+        // Given
+        SignUpRequestDto dto = SignUpRequestDto.builder()
+            .userName("gru2")
+            .password("asdf")
+            .email(mockUser.getEmail())
+            .build();
+
+        //when
+        when(userRepository.findByUserNameOrEmail(dto.getUserName(), dto.getEmail())).thenReturn(mockUser);
+
+        //then
+        DuplicateException exception = assertThrows(DuplicateException.class, () -> userService.signUp(dto));
+        assertThat(exception.getResponseEnum()).isEqualTo(ApiResponseEnum.DUPLICATE_EMAIL);
+
+        verify(userRepository, times(1)).findByUserNameOrEmail(dto.getUserName(), dto.getEmail());
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+
+    @DisplayName("정상 로그인")
     @Test
     void login() {
         LoginDto loginDto = LoginDto.builder()

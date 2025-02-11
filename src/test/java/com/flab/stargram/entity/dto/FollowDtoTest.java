@@ -1,4 +1,5 @@
 package com.flab.stargram.entity.dto;
+
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Set;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import jakarta.validation.ConstraintViolation;
 
-class FollowDtoTest extends ValidatorTest{
+class FollowDtoTest extends ValidatorTest {
 
     @DisplayName("정상 케이스")
     @Test
