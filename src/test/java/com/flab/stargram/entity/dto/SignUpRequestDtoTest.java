@@ -1,4 +1,4 @@
-package com.flab.stargram.entity.model;
+package com.flab.stargram.entity.dto;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -6,15 +6,14 @@ import org.junit.jupiter.api.Test;
 
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.ValidationResult;
-import com.flab.stargram.entity.dto.LoginDto;
 
-class LoginDtoTest {
+class SignUpRequestDtoTest {
 
     @Test
     void validateDtoEmpty_error() {
         // Given
-        LoginDto dto = new LoginDto();
-        dto.setUserName("testUser");
+        SignUpRequestDto dto = new SignUpRequestDto();
+        dto.setUserName(null);
         dto.setPassword("");
 
         // When
@@ -22,14 +21,15 @@ class LoginDtoTest {
 
         // Then
         assertThat(result.isValid()).isFalse();
-        assertThat(result.getError()).isEqualTo(ApiResponseEnum.EMPTY_PASSWORD);
+        assertThat(result.getError()).isEqualTo(ApiResponseEnum.EMPTY_USERNAME);
     }
 
     @Test
     void validateDtoEmpty_success() {
         // Given
-        LoginDto dto = new LoginDto();
+        SignUpRequestDto dto = new SignUpRequestDto();
         dto.setUserName("testUser");
+        dto.setEmail("test@f-lab.com");
         dto.setPassword("123123");
 
         // When
