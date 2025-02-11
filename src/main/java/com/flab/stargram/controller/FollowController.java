@@ -37,7 +37,6 @@ public class FollowController {
 
     @GetMapping("/{inputUserId}/followers")
     public ApiResult followUsers(@PathVariable String inputUserId) {
-        Long userId = ParseUtil.parseToLong(inputUserId);
-        return ApiResult.success(followService.getFollowers(userId));
+        return ApiResult.success(followService.getFollowers(ParseUtil.parseToLong(inputUserId)));
     }
 }

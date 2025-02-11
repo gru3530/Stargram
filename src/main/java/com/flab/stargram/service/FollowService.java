@@ -38,7 +38,7 @@ public class FollowService {
     }
 
     @Transactional
-    public List<Follow> getFollowers(Long userId) {
+    public List<Long> getFollowers(Long userId) {
         if (!userService.hasUserId(userId)) {
             throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
         }
@@ -47,7 +47,7 @@ public class FollowService {
             throw new DataNotFoundException(ApiResponseEnum.FOLLOW_NOT_FOUND);
         }
 
-        return followRepository.findByFollowerId(userId);
+        return getFollowerIds(followRepository.findByFollowingId(userId));
     }
 
     private void validateFollowDto(FollowDto followDto) {
@@ -60,7 +60,7 @@ public class FollowService {
             throw new DuplicateException(ApiResponseEnum.ALREADY_FOLLOWING);
         }
 
-        if (followDto.getFollowerId().equals(followDto.getFollowingId())) {
+        if (followDto.isSameUser()) {
             throw new DuplicateException(ApiResponseEnum.ALREADY_FOLLOWING);
         }
     }
@@ -78,5 +78,11 @@ public class FollowService {
 
     private void deleteFollow(FollowDto followDto) {
         followRepository.deleteByFollowerIdAndFollowingId(followDto.getFollowerId(), followDto.getFollowingId());
+    }
+
+    private List<Long> getFollowerIds(List<Follow> follows) {
+        return follows.stream()
+            .map(Follow::getFollowerId)
+            .toList();
     }
 }
