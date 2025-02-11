@@ -5,6 +5,8 @@ import com.flab.stargram.entity.common.BaseDto;
 import com.flab.stargram.entity.common.ValidationResult;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,27 +14,14 @@ import lombok.Setter;
 
 @Builder
 @Getter
-public class SignUpRequestDto extends BaseDto {
+public class SignUpRequestDto {
+    @NotBlank(message = "userName은 비어 있을 수 없습니다.")
     private String userName;
 
-    @Email(message = "올바른 형식의 email을 입력해주세요")
-    private String email;
+    @NotBlank(message = "password는 비어 있을 수 없습니다.")
     private String password;
 
-    @Override
-    public ValidationResult validateEmpty() {
-        if (isFieldEmpty(userName)) {
-            validationResult.addError(ApiResponseEnum.EMPTY_USERNAME);
-        }
-
-        if (isFieldEmpty(email)) {
-            validationResult.addError(ApiResponseEnum.EMPTY_EMAIL);
-        }
-
-        if (isFieldEmpty(password)) {
-            validationResult.addError(ApiResponseEnum.EMPTY_PASSWORD);
-        }
-
-        return validationResult;
-    }
+    @Email(message = "올바른 형식의 email을 입력해주세요.")
+    @NotBlank(message = "email은 비어 있을 수 없습니다.")
+    private String email;
 }

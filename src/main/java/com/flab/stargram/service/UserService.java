@@ -24,9 +24,7 @@ public class UserService {
     public User signUp(SignUpRequestDto dto) {
         checkUserDuplication(dto);
 
-        User user = User.createUserOf(dto);
-        userRepository.save(user);
-        return user;
+        return userRepository.save(User.createUserOf(dto));
     }
 
     @Transactional
