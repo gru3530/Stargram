@@ -4,14 +4,18 @@ import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.BaseDto;
 import com.flab.stargram.entity.common.ValidationResult;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Getter
-@Setter
 public class SignUpRequestDto extends BaseDto {
     private String userName;
+
+    @Email(message = "올바른 형식의 email을 입력해주세요")
     private String email;
     private String password;
 
