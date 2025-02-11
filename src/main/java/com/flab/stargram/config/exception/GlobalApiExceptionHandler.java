@@ -1,6 +1,9 @@
 package com.flab.stargram.config.exception;
 
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
@@ -8,6 +11,8 @@ import com.flab.stargram.entity.common.ApiResult;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -40,5 +45,22 @@ public class GlobalApiExceptionHandler {
         }
 
         return ApiResult.error(ApiResponseEnum.INVALID_INPUT, ApiResponseEnum.INVALID_INPUT.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResult> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = ex.getBindingResult().getFieldErrors().stream()
+            .collect(
+                Collectors.toMap(
+                    FieldError::getField,
+                    fieldError -> Optional.ofNullable(fieldError.getDefaultMessage()).orElse("Invalid value")
+                )
+            );
+
+        return ApiResult.error(
+            ApiResponseEnum.INVALID_INPUT,
+            ApiResponseEnum.INVALID_INPUT.getMessage(),
+            errors
+        );
     }
 }
