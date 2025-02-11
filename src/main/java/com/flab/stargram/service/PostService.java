@@ -30,7 +30,7 @@ public class PostService {
     }
 
     public boolean hasPostId(Long postId) {
-        return postRepository.existsById(postId);
+        return postRepository.existsByPostId(postId);
     }
 
     private boolean findByUserId(PostRequestDto dto) {
