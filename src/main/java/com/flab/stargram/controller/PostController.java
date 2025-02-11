@@ -21,7 +21,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity<ApiResult> createPost(@RequestBody PostRequestDto dto) {
+    public ApiResult createPost(@RequestBody PostRequestDto dto) {
         dto.validateEmpty().ifInvalidThrow();
 
         return ApiResult.success(postService.postFeed(dto));

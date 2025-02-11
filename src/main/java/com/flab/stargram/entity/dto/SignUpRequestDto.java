@@ -4,6 +4,7 @@ import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.BaseDto;
 import com.flab.stargram.entity.common.ValidationResult;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -7,6 +7,7 @@ import com.flab.stargram.entity.dto.LoginDto;
 import com.flab.stargram.entity.dto.SignUpRequestDto;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 @Entity
@@ -20,6 +21,7 @@ public class User extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String userName;
 
+    @Email
     @Column(unique = true, nullable = false)
     private String email;
 

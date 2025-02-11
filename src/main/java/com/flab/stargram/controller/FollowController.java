@@ -1,6 +1,5 @@
 package com.flab.stargram.controller;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,21 +24,20 @@ public class FollowController {
     private final FollowService followService;
 
     @PostMapping("/follow")
-    public ResponseEntity<ApiResult> followUser(@Valid @RequestBody FollowDto dto) {
+    public ApiResult followUser(@Valid @RequestBody FollowDto dto) {
         followService.followUser(dto);
         return ApiResult.success(null);
     }
 
     @PostMapping("/unfollow")
-    public ResponseEntity<ApiResult> unfollowUser(@Valid @RequestBody FollowDto dto) {
+    public ApiResult unfollowUser(@Valid @RequestBody FollowDto dto) {
         followService.unfollowUser(dto);
         return ApiResult.success(null);
     }
 
     @GetMapping("/{inputUserId}/followers")
-    public ResponseEntity<ApiResult> followUsers(@PathVariable String inputUserId) {
+    public ApiResult followUsers(@PathVariable String inputUserId) {
         Long userId = ParseUtil.parseToLong(inputUserId);
-
         return ApiResult.success(followService.getFollowers(userId));
     }
 }

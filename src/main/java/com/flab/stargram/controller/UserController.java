@@ -25,14 +25,14 @@ public class UserController {
 	private final AuthCookieService authCookieService;
 
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResult> signUp(@RequestBody SignUpRequestDto dto) {
+	public ApiResult signUp(@RequestBody SignUpRequestDto dto) {
 		dto.validateEmpty().ifInvalidThrow();
 
 		return ApiResult.success(userService.signUp(dto));
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<ApiResult> login(@RequestBody LoginDto dto, HttpServletResponse response) {
+	public ApiResult login(@RequestBody LoginDto dto, HttpServletResponse response) {
 		dto.validateEmpty().ifInvalidThrow();
 
 		User user = userService.login(dto);
@@ -43,7 +43,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users/logout")
-	public ResponseEntity<ApiResult> logout(HttpServletResponse response) {
+	public ApiResult logout(HttpServletResponse response) {
 		authCookieService.removeAuthCookie(response);
 		return ApiResult.success(null);
 	}

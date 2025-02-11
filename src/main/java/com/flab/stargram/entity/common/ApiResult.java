@@ -15,9 +15,8 @@ public class ApiResult {
 	private final String message;
 	private final Object data;
 
-	public static ResponseEntity<ApiResult> success(Object data) {
-		ApiResult result = new ApiResult(ApiResponseEnum.SUCCESS, null, data);
-		return ResponseEntity.ok(result);
+	public static ApiResult success(Object data) {
+		return new ApiResult(ApiResponseEnum.SUCCESS, null, data);
 	}
 
 	public static ResponseEntity<ApiResult> error(ApiResponseEnum apiResponseEnum, String message) {
