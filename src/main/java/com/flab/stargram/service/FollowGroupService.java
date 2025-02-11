@@ -14,8 +14,12 @@ import lombok.RequiredArgsConstructor;
 public class FollowGroupService {
     private final FollowGroupRepository followGroupRepository;
 
-    public boolean hasFollow(Long userId) {
+    public boolean hasFollowing(Long userId) {
         return followGroupRepository.existsByFollowingId(userId);
+    }
+
+    public boolean hasFollower(Long userId) {
+        return followGroupRepository.existsByFollowerId(userId);
     }
 
     @Transactional

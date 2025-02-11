@@ -125,35 +125,35 @@ class FollowServiceTest {
 
     @DisplayName("특정 유저의 팔로워 들을 불러오는 API 통합테스트")
     @Test
-    void getFollowers() {
+    void getFollowerIds() {
         //given
         Long userId = 1L;
         List<Follow> mockFollowers = Collections.singletonList(mock(Follow.class));
 
         //when
         when(userService.hasUserId(userId)).thenReturn(true);
-        when(followGroupService.hasFollow(userId)).thenReturn(true);
         when(followRepository.findByFollowerId(userId)).thenReturn(mockFollowers);
-
-        List<Long> followerIds = followService.getFollowers(userId);
+        List<Long> follow = followService.getFollowerIds(userId);
 
         //then
-        assertNotNull(followerIds);
-        verify(followRepository, times(1)).findByFollowingId(userId);
+        assertNotNull(follow);
+        verify(followRepository, times(1)).findByFollowerId(userId);
     }
 
-    @DisplayName("특정 유저의 팔로워 들을 불러오는 API 팔로워가 없는경우 에러 반환 테스트")
+    @DisplayName("특정 유저의 팔로잉들을 불러오는 API 통합테스트")
     @Test
-    void getFollowers_error_followNotExists() {
+    void getFollowings() {
         //given
         Long userId = 1L;
+        List<Follow> mockFollowings = Collections.singletonList(mock(Follow.class));
 
         //when
         when(userService.hasUserId(userId)).thenReturn(true);
-        when(followGroupService.hasFollow(userId)).thenReturn(false);
+        when(followRepository.findByFollowingId(userId)).thenReturn(mockFollowings);
+        List<Long> follow = followService.getFollowingIds(userId);
 
         //then
-        DataNotFoundException exception = assertThrows(DataNotFoundException.class, () -> followService.getFollowers(userId));
-        assertThat(exception.getResponseEnum()).isEqualTo(ApiResponseEnum.FOLLOW_NOT_FOUND);
+        assertNotNull(follow);
+        verify(followRepository, times(1)).findByFollowingId(userId);
     }
 }

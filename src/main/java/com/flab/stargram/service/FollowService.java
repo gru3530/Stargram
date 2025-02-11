@@ -1,5 +1,6 @@
 package com.flab.stargram.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -38,16 +39,23 @@ public class FollowService {
     }
 
     @Transactional
-    public List<Long> getFollowers(Long userId) {
+    public List<Long> getFollowerIds(Long userId) {
         if (!userService.hasUserId(userId)) {
             throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
         }
 
-        if (!followGroupService.hasFollow(userId)) {
-            throw new DataNotFoundException(ApiResponseEnum.FOLLOW_NOT_FOUND);
+        List<Follow> followerIds = followRepository.findByFollowerId(userId);
+        return followerIds.isEmpty() ? Collections.emptyList() : getFollowerIds(followerIds);
+    }
+
+    @Transactional
+    public List<Long> getFollowingIds(Long userId) {
+        if (!userService.hasUserId(userId)) {
+            throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
         }
 
-        return getFollowerIds(followRepository.findByFollowingId(userId));
+        List<Follow> followingIds = followRepository.findByFollowingId(userId);
+        return followingIds.isEmpty() ? Collections.emptyList() : getFollowingIds(followingIds);
     }
 
     private void validateFollowDto(FollowDto followDto) {
@@ -83,6 +91,12 @@ public class FollowService {
     private List<Long> getFollowerIds(List<Follow> follows) {
         return follows.stream()
             .map(Follow::getFollowerId)
+            .toList();
+    }
+
+    public List<Long> getFollowingIds(List<Follow> follows) {
+        return follows.stream()
+            .map(Follow::getFollowingId)
             .toList();
     }
 }

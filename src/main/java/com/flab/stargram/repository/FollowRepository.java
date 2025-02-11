@@ -19,7 +19,7 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     long countByFollowingId(Long followingId);
     //SELECT COUNT(*) FROM follow WHERE follower_id = ?;
     long countByFollowerId(Long followerId);
-    //SELECT * FROM follow WHERE follower_id = ?;
+    //SELECT * FROM follow WHERE following_id = ?;
     List<Follow> findByFollowingId(Long followingId);
     //SELECT * FROM follow WHERE follower_id = ? ORDER BY id ASC LIMIT ? OffSET ?;
     List<Follow> findByFollowerId(Long followerId);

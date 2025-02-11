@@ -9,4 +9,6 @@ public interface FollowGroupRepository extends JpaRepository<FollowGroup, Long> 
     FollowGroup findByFollowingId(Long followingId);
     //SELECT COUNT(*) > 0 FROM follow_group WHERE following_id = ?
     boolean existsByFollowingId(Long followingId);
+    //SELECT COUNT(*) > 0 FROM follow_group WHERE follower_id = ?
+    boolean existsByFollowerId(Long followerId);
 }
