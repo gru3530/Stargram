@@ -80,7 +80,7 @@ class FollowDtoTest extends ValidatorTest {
         assertThat(violations.iterator().next().getMessage()).isEqualTo("follower ID는 필수 입니다.");
     }
 
-    @DisplayName("followerId가 음수인 경우 검증 오류 발생")
+    @DisplayName("followerId가 음수인 경우 검증 오류 발생시킨다")
     @Test
     void followerIdIsNegative() {
         FollowDto dto = FollowDto.builder()
@@ -93,5 +93,18 @@ class FollowDtoTest extends ValidatorTest {
         assertThat(violations).isNotEmpty();
         assertThat(violations.iterator().next().getMessage()).isEqualTo("follower ID는 양수로 입력해야 합니다.");
     }
+
+    @DisplayName("follow dto followingID와 FollowID가 동일하면 true를 반환한다")
+    @Test
+    void followDtoSameUser(){
+        FollowDto dto = FollowDto.builder()
+            .followingId(1L)
+            .followerId(1L)
+            .build();
+
+        assertThat(dto.isSameUser()).isTrue();
+    }
+
+
 
 }

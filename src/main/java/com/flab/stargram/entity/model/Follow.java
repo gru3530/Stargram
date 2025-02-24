@@ -30,13 +30,13 @@ public class Follow extends BaseEntity {
     @Column(nullable = false)
     private Long followingId;
 
-    private Follow(FollowGroup followGroup, Long followerId, Long followingId) {
+    private Follow(FollowGroup followGroup, FollowDto followDto) {
         this.followGroup = followGroup;
-        this.followerId = followerId;
-        this.followingId = followingId;
+        this.followerId = followDto.getFollowerId();
+        this.followingId = followDto.getFollowingId();
     }
 
     public static Follow createFollowOf(FollowGroup followGroup, FollowDto followDto) {
-        return new Follow(followGroup, followDto.getFollowerId(), followDto.getFollowingId());
+        return new Follow(followGroup, followDto);
     }
 }

@@ -14,7 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.flab.stargram.config.exception.DataNotFoundException;
 import com.flab.stargram.config.exception.DuplicateException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.dto.FollowDto;
@@ -62,7 +61,7 @@ class FollowServiceTest {
         verify(followRepository, times(1)).save(any(Follow.class));
     }
 
-    @DisplayName("follow API 중복 Follow 에러 반환 테스트")
+    @DisplayName("Follow API  Follow 에러 반환 테스트")
     @Test
     void followUser_error_duplicate() {
         //given
@@ -76,8 +75,9 @@ class FollowServiceTest {
         when(followRepository.existsByFollowerIdAndFollowingId(followDto.getFollowerId(),
                 followDto.getFollowingId())).thenReturn(true);
         //then
-        DuplicateException exception = assertThrows(DuplicateException.class, () -> followService.followUser(followDto));
-        assertThat(exception.getResponseEnum()).isEqualTo(ApiResponseEnum.ALREADY_FOLLOWING);
+        assertThatThrownBy(() -> followService.followUser(followDto))
+            .usingRecursiveComparison()
+            .isEqualTo(new DuplicateException(ApiResponseEnum.ALREADY_FOLLOWING));
     }
 
     @DisplayName("follow API followingID와 followID 동일한 경우 에러 반환 테스트")
@@ -95,8 +95,9 @@ class FollowServiceTest {
             followDto.getFollowingId())).thenReturn(false);
 
         //then
-        DuplicateException exception = assertThrows(DuplicateException.class, () -> followService.followUser(followDto));
-        assertThat(exception.getResponseEnum()).isEqualTo(ApiResponseEnum.ALREADY_FOLLOWING);
+        assertThatThrownBy(() -> followService.followUser(followDto))
+            .usingRecursiveComparison()
+            .isEqualTo(new DuplicateException(ApiResponseEnum.ALREADY_FOLLOWING));
     }
 
 

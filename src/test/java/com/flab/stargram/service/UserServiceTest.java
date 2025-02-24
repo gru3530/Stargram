@@ -65,7 +65,7 @@ class UserServiceTest {
         assertThat(result).isEqualTo(mockUser);
     }
 
-    @DisplayName("중복된 사용자명 회원가입 시 에러 반환 테스트")
+    @DisplayName("Signup AIP 입력한 userName이 이미 존재하는 경우 DuplicateException을 반환한다")
     @Test
     void signUp_error_duplicateUserName() {
         // Given
@@ -86,7 +86,7 @@ class UserServiceTest {
         verify(userRepository, never()).save(any(User.class));
     }
 
-    @DisplayName("중복된 email 회원가입 시 에러 반환 테스트")
+    @DisplayName("Signup AIP 입력한 email이 이미 존재하는 경우 DuplicateException을 반환한다")
     @Test
     void signup_error_invalidEmail() {
         // Given
@@ -127,7 +127,7 @@ class UserServiceTest {
         verify(userRepository, times(1)).findByUserName(loginDto.getUserName());
     }
 
-    @DisplayName("존재하지 않는 사용자 ID로 로그인 시 에러반환 테스트")
+    @DisplayName("LogIn API userName이 DB에 없는경우 DataNotFoundException를 반환한다")
     @Test
     void login_error_NotExistId(){
         // Given
@@ -139,13 +139,14 @@ class UserServiceTest {
         //when
         when(userRepository.findByUserName(dto.getUserName())).thenReturn(null);
 
-
         //then
         DataNotFoundException exception = assertThrows(DataNotFoundException.class, () -> userService.login(dto));
         assertThat(exception.getResponseEnum()).isEqualTo(ApiResponseEnum.USER_NOT_FOUND);
+
+
     }
 
-    @DisplayName("로그인중 비밀번호 오류 시 에러 반환 테스트")
+    @DisplayName("LogIn API password가 DB에 저장된 값과 다른경우 InvalidPasswordException를 반환한다")
     @Test
     void login_error_incorrectPassword(){
         // Given
