@@ -26,13 +26,13 @@ public class FollowController {
     @PostMapping("/follow")
     public ApiResult followUser(@Valid @RequestBody FollowDto dto) {
         followService.followUser(dto);
-        return ApiResult.success(null);
+        return ApiResult.success();
     }
 
     @PostMapping("/unfollow")
     public ApiResult unfollowUser(@Valid @RequestBody FollowDto dto) {
         followService.unfollowUser(dto);
-        return ApiResult.success(null);
+        return ApiResult.success();
     }
 
     @GetMapping("/{inputUserId}/followers")

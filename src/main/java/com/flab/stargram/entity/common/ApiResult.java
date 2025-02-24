@@ -19,6 +19,10 @@ public class ApiResult {
 		return new ApiResult(ApiResponseEnum.SUCCESS, null, data);
 	}
 
+	public static ApiResult success() {
+		return new ApiResult(ApiResponseEnum.SUCCESS, null, null);
+	}
+
 	public static ResponseEntity<ApiResult> error(ApiResponseEnum apiResponseEnum, String message) {
 		ApiResult result = new ApiResult(apiResponseEnum, message, null);
 		return ResponseEntity.status(apiResponseEnum.getHttpStatus()).body(result);
