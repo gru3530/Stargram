@@ -3,6 +3,8 @@
 > **Stargram은 인스타그램의 핵심 기능을 구현한 SNS 플랫폼입니다.**
 > **사용자는 사진, 동영상과 텍스트를 공유하며, 댓글과 좋아요를 통해 소통할 수 있습니다.**
 
+
+
 ---
 
 ## 📷 **프로젝트 개요**
@@ -17,6 +19,10 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 ✅ **GitHub Projects를 활용한 애자일 개발 진행**  
 ✅ **RESTful API 설계 및 문서화**
 
+
+[Stargram API LIST](https://docs.google.com/spreadsheets/d/1piFu00NngGIWQvQfoORgb7A-OuY4zVjEH804PHcYPtA/edit?gid=0#gid=0)
+[Stargram 애자일](https://github.com/orgs/f-lab-edu/projects/331)
+[코드 규칙](https://naver.github.io/hackday-conventions-java/#_intellij)
 ---
 
 ## 🛠 **기술 스택**
