@@ -20,9 +20,10 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 ✅ **RESTful API 설계 및 문서화**
 
 
-[Stargram API LIST](https://docs.google.com/spreadsheets/d/1piFu00NngGIWQvQfoORgb7A-OuY4zVjEH804PHcYPtA/edit?gid=0#gid=0)
-[Stargram 애자일](https://github.com/orgs/f-lab-edu/projects/331)
-[코드 규칙](https://naver.github.io/hackday-conventions-java/#_intellij)
+📌 **[Stargram API LIST](https://docs.google.com/spreadsheets/d/1piFu00NngGIWQvQfoORgb7A-OuY4zVjEH804PHcYPtA/edit?gid=0#gid=0)**  
+📌 **[Stargram 애자일 프로젝트](https://github.com/orgs/f-lab-edu/projects/331)**  
+📌 **[코드 규칙 (Naver Convention)](https://naver.github.io/hackday-conventions-java/#_intellij)**  
+
 ---
 
 ## 🛠 **기술 스택**
