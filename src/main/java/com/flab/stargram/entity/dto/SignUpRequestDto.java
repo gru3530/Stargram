@@ -1,23 +1,19 @@
 package com.flab.stargram.entity.dto;
 
-import com.flab.stargram.entity.common.ApiResponseEnum;
-import com.flab.stargram.entity.common.BaseDto;
-import com.flab.stargram.entity.common.ValidationResult;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Builder
 @Getter
 public class SignUpRequestDto {
+    @Size(min = 2, max = 20, message = "userName은 2~20자로 입력해야 합니다.")
     @NotBlank(message = "userName은 비어 있을 수 없습니다.")
     private String userName;
 
+    @Size(min = 8, max = 50, message = "비밀번호는 8~50자로 입력해야 합니다.")
     @NotBlank(message = "password는 비어 있을 수 없습니다.")
     private String password;
 
