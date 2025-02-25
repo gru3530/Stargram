@@ -3,6 +3,7 @@ package com.flab.stargram.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.flab.stargram.domain.fanout.service.FanoutService;
 import com.flab.stargram.entity.model.Post;
 import com.flab.stargram.entity.dto.PostRequestDto;
 import com.flab.stargram.config.exception.DataNotFoundException;
@@ -17,6 +18,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserService userService;
+    private final FanoutService fanoutService;
 
     @Transactional
     public Post postFeed(PostRequestDto dto) {
@@ -26,6 +28,8 @@ public class PostService {
 
         Post post = Post.writePostOf(dto);
         postRepository.save(post);
+
+        fanoutService.distributeToFollowers(post);
         return post;
     }
 

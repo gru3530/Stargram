@@ -33,5 +33,4 @@ public class Post extends BaseEntity {
     public static Post writePostOf(PostRequestDto dto) {
         return new Post(dto);
     }
-
 }

@@ -7,8 +7,11 @@ import com.flab.stargram.config.exception.DuplicateException;
 import com.flab.stargram.config.exception.InvalidPasswordException;
 import com.flab.stargram.config.exception.DataNotFoundException;
 import com.flab.stargram.entity.common.ApiResponseEnum;
+import com.flab.stargram.entity.common.UserTypeEnum;
 import com.flab.stargram.entity.dto.LoginDto;
+import com.flab.stargram.entity.dto.PostRequestDto;
 import com.flab.stargram.entity.dto.SignUpRequestDto;
+import com.flab.stargram.entity.model.Post;
 import com.flab.stargram.entity.model.User;
 import com.flab.stargram.repository.UserRepository;
 
@@ -29,7 +32,7 @@ public class UserService {
 
     @Transactional
     public User login(LoginDto dto) {
-        User user = fetchUser(dto);
+        User user = getUser(dto);
 
         if (!user.isCorrectPassword(dto)) {
             throw new InvalidPasswordException(ApiResponseEnum.INVALID_PASSWORD);
@@ -61,7 +64,7 @@ public class UserService {
         return userRepository.findByUserNameOrEmail(dto.getUserName(), dto.getEmail());
     }
 
-    private User fetchUser(LoginDto dto) {
+    private User getUser(LoginDto dto) {
         User user = userRepository.findByUserName(dto.getUserName());
         if (user == null) {
             throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
@@ -72,5 +75,14 @@ public class UserService {
 
     public boolean hasUserId(Long userId) {
         return userRepository.existsById(userId);
+    }
+
+    public UserTypeEnum getUserType(Long userId) {
+        User user = userRepository.findByUserId(userId);
+        if (user == null) {
+            throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
+        }
+
+        return user.getUserType();
     }
 }

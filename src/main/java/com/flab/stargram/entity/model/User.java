@@ -3,6 +3,7 @@ package com.flab.stargram.entity.model;
 import java.time.LocalDateTime;
 
 import com.flab.stargram.entity.common.BaseEntity;
+import com.flab.stargram.entity.common.UserTypeEnum;
 import com.flab.stargram.entity.dto.LoginDto;
 import com.flab.stargram.entity.dto.SignUpRequestDto;
 
@@ -28,12 +29,17 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private UserTypeEnum userType;
+
     private LocalDateTime loggedInAt;
+
 
     private User(SignUpRequestDto dto){
         this.userName = dto.getUserName();
         this.email = dto.getEmail();
         this.password = dto.getPassword();
+        this.userType = UserTypeEnum.REGULAR;
     }
 
     public static User createUserOf(SignUpRequestDto dto){

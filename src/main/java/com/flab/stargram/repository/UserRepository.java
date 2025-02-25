@@ -11,7 +11,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //SELECT * FROM user WHERE user_name = ?
     User findByUserName(String userName);
     //SELECT * FROM user where id = ?
-    User findById(long id);
+    User findByUserId(long id);
     //SELECT COUNT(*) > 0 FROM user WHERE email = ?
     boolean existsByEmail(String email);
     //SELECT COUNT(*) > 0 FROM user WHERE user_name = ?
