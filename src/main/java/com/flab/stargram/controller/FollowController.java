@@ -1,6 +1,6 @@
 package com.flab.stargram.controller;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,40 +10,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.flab.stargram.entity.common.ApiResult;
 import com.flab.stargram.entity.common.ParseUtil;
-import com.flab.stargram.entity.dto.FollowPair;
-import com.flab.stargram.entity.dto.FollowRequestDto;
+import com.flab.stargram.entity.dto.FollowDto;
 import com.flab.stargram.service.FollowService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/users/{inputUserId}")
+@RequestMapping("/users")
 @RequiredArgsConstructor
+@Validated
 public class FollowController {
     private final FollowService followService;
 
     @PostMapping("/follow")
-    public ResponseEntity<ApiResult> followUser(@RequestBody FollowRequestDto dto, @PathVariable String inputUserId) {
-        dto.validateEmpty().ifInvalidThrow();
-        FollowPair followPair = FollowPair.createFollowPairOf(inputUserId, dto);
-
-        followService.followUser(followPair);
-        return ApiResult.success(null);
+    public ApiResult followUser(@Valid @RequestBody FollowDto dto) {
+        followService.followUser(dto);
+        return ApiResult.success();
     }
 
     @PostMapping("/unfollow")
-    public ResponseEntity<ApiResult> unfollowUser(@RequestBody FollowRequestDto dto, @PathVariable String inputUserId) {
-        dto.validateEmpty().ifInvalidThrow();
-        FollowPair followPair = FollowPair.createFollowPairOf(inputUserId, dto);
-
-        followService.unfollowUser(followPair);
-        return ApiResult.success(null);
+    public ApiResult unfollowUser(@Valid @RequestBody FollowDto dto) {
+        followService.unfollowUser(dto);
+        return ApiResult.success();
     }
 
-    @GetMapping("/followers")
-    public ResponseEntity<ApiResult> followUsers(@PathVariable String inputUserId) {
-        Long userId = ParseUtil.parseToLong(inputUserId);
-
-        return ApiResult.success(followService.getFollowers(userId));
+    @GetMapping("/{inputUserId}/followers")
+    public ApiResult followUsers(@PathVariable String inputUserId) {
+        return ApiResult.success(followService.getFollowerIds(ParseUtil.parseToLong(inputUserId)));
     }
 }

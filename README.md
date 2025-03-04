@@ -1,9 +1,7 @@
 # 🌟 Stargram - Instagram Clone Project
 
 > **Stargram은 인스타그램의 핵심 기능을 구현한 SNS 플랫폼입니다.**
-> **사용자는 사진, 동영상과 텍스트를 공유하며, 댓글과 좋아요를 통해 소통할 수 있습니다.**
-
-
+> **사용자는 사진/동영상과 텍스트를 공유하며, 댓글과 좋아요를 통해 소통할 수 있습니다.**
 
 ---
 
@@ -69,7 +67,7 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 Stargram
 │── src
 │   ├── main
-│   │   ├── java/com/stargram
+│   │   ├── java.com.flab.stargram
 │   │   │   ├── config         # 프로젝트 설정 (예외 처리, 보안, 키 관리 등)
 │   │   │   ├── controller     # REST API 컨트롤러
 │   │   │   ├── domain         # 비즈니스 로직

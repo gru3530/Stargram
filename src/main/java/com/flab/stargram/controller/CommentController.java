@@ -22,7 +22,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/{postIdInput}/comment")
-    public ResponseEntity<ApiResult> createComment(@RequestBody CommentRequestDto dto, @PathVariable String postIdInput) {
+    public ApiResult createComment(@RequestBody CommentRequestDto dto, @PathVariable String postIdInput) {
         dto.validateEmpty().ifInvalidThrow();
 
         Long postId = ParseUtil.parseToLong(postIdInput);

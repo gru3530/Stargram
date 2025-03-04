@@ -4,25 +4,19 @@ import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.common.BaseDto;
 import com.flab.stargram.entity.common.ValidationResult;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Getter
-@Setter
-public class LoginDto extends BaseDto {
+public class LoginDto {
+    @NotBlank(message = "userName은 비어 있을 수 없습니다.")
     private String userName;
+
+    @NotBlank(message = "password는 비어 있을 수 없습니다.")
     private String password;
-
-    @Override
-    public ValidationResult validateEmpty() {
-        if (isFieldEmpty(userName)) {
-            validationResult.addError(ApiResponseEnum.EMPTY_USERNAME);
-        }
-
-        if (isFieldEmpty(password)) {
-	        validationResult.addError(ApiResponseEnum.EMPTY_PASSWORD);
-        }
-
-		return validationResult;
-    }
 }

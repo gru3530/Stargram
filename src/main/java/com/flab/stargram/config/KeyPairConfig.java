@@ -8,11 +8,13 @@ import java.security.KeyPairGenerator;
 
 @Configuration
 public class KeyPairConfig {
+    private static final String KEY_ALGORITHM = "RSA";
+    private static final int RSA_KEY_SIZE = 2048;
 
     @Bean
     public KeyPair keyPair() throws Exception {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(2048);
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KEY_ALGORITHM);
+        keyPairGenerator.initialize(RSA_KEY_SIZE);
         return keyPairGenerator.generateKeyPair();
     }
 }

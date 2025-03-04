@@ -5,7 +5,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +30,7 @@ public class AuthInterceptorService implements HandlerInterceptor {
 
         try {
             request.setAttribute("userId", authService.validateToken(token).getSubject());
-        } catch (ExpiredJwtException e) {
+        } catch (SignatureException | ExpiredJwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }

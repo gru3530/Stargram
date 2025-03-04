@@ -11,7 +11,7 @@ import com.flab.stargram.entity.model.Follow;
 
 @Repository
 public interface FollowRepository extends JpaRepository<Follow, Long> {
-    //SELECT EXISTS (SELECT 1 FROM follow WHERE follower_id = ? AND following_id = ?)
+    //SELECT COUNT(*) > 0 FROM follow WHERE follower_id = ? AND following_id = ?
     boolean existsByFollowerIdAndFollowingId(Long followerId, Long followingId);
     //DELETE FROM follow WHERE follower_id = ? AND following_id = ?
     void deleteByFollowerIdAndFollowingId(Long followerId, Long followingId);
@@ -19,9 +19,8 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     long countByFollowingId(Long followingId);
     //SELECT COUNT(*) FROM follow WHERE follower_id = ?;
     long countByFollowerId(Long followerId);
-    //SELECT * FROM follow WHERE follower_id = ?;
-    List<Follow> findByFollowerId(Long followerId);
+    //SELECT * FROM follow WHERE following_id = ?;
+    List<Follow> findByFollowingId(Long followingId);
     //SELECT * FROM follow WHERE follower_id = ? ORDER BY id ASC LIMIT ? OffSET ?;
-    Page<Follow> findByFollowerId(Long followingId, Pageable pageable);
-
+    List<Follow> findByFollowerId(Long followerId);
 }
