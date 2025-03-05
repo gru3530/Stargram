@@ -1,5 +1,6 @@
 package com.flab.stargram.domain.auth.service;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+@Profile("!test")
 @RequiredArgsConstructor
 @Service
 public class AuthInterceptorService implements HandlerInterceptor {

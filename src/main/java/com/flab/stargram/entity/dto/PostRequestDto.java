@@ -1,16 +1,13 @@
 package com.flab.stargram.entity.dto;
 
-import com.flab.stargram.entity.common.ApiResponseEnum;
-import com.flab.stargram.entity.common.BaseDto;
-import com.flab.stargram.entity.common.ValidationResult;
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 
 @Builder
 @Getter
-public class PostRequestDto extends BaseDto {
+public class PostRequestDto {
     @NotNull(message = "userID는 필수 입니다.")
     private Long userId;
 

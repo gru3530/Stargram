@@ -1,5 +1,7 @@
 package com.flab.stargram.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
@@ -16,6 +18,7 @@ public class FollowDto {
     @Positive(message = "follower ID는 양수로 입력해야 합니다.")
     private Long followerId;
 
+    @JsonIgnore
     public boolean isSameUser(){
         return followingId.equals(followerId);
     }
