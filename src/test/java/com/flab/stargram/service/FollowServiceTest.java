@@ -7,14 +7,16 @@ import static org.mockito.Mockito.*;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.flab.stargram.config.exception.DuplicateException;
+import com.flab.stargram.controller.BaseMockTest;
 import com.flab.stargram.entity.common.ApiResponseEnum;
 import com.flab.stargram.entity.dto.FollowDto;
 import com.flab.stargram.entity.model.Follow;
@@ -22,7 +24,8 @@ import com.flab.stargram.entity.model.FollowGroup;
 import com.flab.stargram.repository.FollowRepository;
 import com.flab.stargram.repository.UserRepository;
 
-class FollowServiceTest {
+@ActiveProfiles("test")
+class FollowServiceTest extends BaseMockTest {
     @InjectMocks
     private FollowService followService;
 
@@ -34,11 +37,6 @@ class FollowServiceTest {
     private FollowRepository followRepository;
     @Mock
     private UserRepository userRepository;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @DisplayName("follow API 통합테스트")
     @Test

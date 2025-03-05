@@ -1,7 +1,10 @@
+import org.asciidoctor.gradle.jvm.AsciidoctorTask
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.0'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'com.flab'
@@ -40,8 +43,81 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-core'
 }
 
 tasks.test {
 	useJUnitPlatform()
+}
+
+tasks.register("copyDocs", Copy) {
+	dependsOn test
+	from("build/generated-snippets")
+	into("src/docs")
+	include("**/*.adoc")
+}
+
+tasks.register("generateIndexAdoc") {
+	dependsOn copyDocs
+	doLast {
+		def docsDir = file("src/docs")
+		def indexAdoc = file("${docsDir}/index.adoc")
+
+		def content = new StringBuilder()
+		content.append("= API 문서\n")
+		content.append(":doctype: book\n")
+		content.append(":toc: left\n")
+		content.append(":toclevels: 2\n")
+		content.append(":sectlinks:\n")
+		content.append(":source-highlighter: highlightjs\n")
+		content.append("== API 목록\n\n")
+		def adocFiles = ["http-request.adoc", "http-response.adoc", "request-fields.adoc", "path-parameters.adoc", "response-fields.adoc"]
+
+		file(docsDir)?.listFiles()?.each { controllerDir ->
+			if (controllerDir.isDirectory()) {
+				def controllerName = controllerDir.name
+				content.append("=== ${controllerName}\n\n")
+
+				controllerDir.listFiles()?.each { apiDir ->
+					if (apiDir.isDirectory()) {
+						def apiName = apiDir.name
+						content.append("==== ${apiName}\n")
+						adocFiles.each { fileName ->
+							def file = new File(apiDir, fileName)
+							if (file.exists()) {
+								content.append("include::${controllerName}/${apiName}/${fileName}[]\n")
+							}
+						}
+						content.append("\n")
+					}
+				}
+			}
+		}
+
+		indexAdoc.withWriter("UTF-8") { writer ->
+			writer.write(content.toString())
+		}
+
+		println "index.adoc 자동 생성 완료"
+	}
+}
+
+tasks.register("convertIndexToHtml", AsciidoctorTask) {
+	dependsOn generateIndexAdoc
+	sourceDir = (file("src/docs"))
+	outputDir = (file("src/docs"))
+	baseDirFollowsSourceFile()
+	attributes "source-highlighter": "highlightjs"
+	sources {
+		include("index.adoc")
+	}
+	doLast {
+		file("src/docs/index.adoc").delete()
+		println "index.html 변환 완료"
+	}
+}
+
+tasks.named("build") {
+	dependsOn("convertIndexToHtml")
 }
