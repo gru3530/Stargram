@@ -1,8 +1,7 @@
 package com.flab.stargram.config;
 
-import java.security.KeyPair;
-
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -10,6 +9,7 @@ import com.flab.stargram.domain.auth.service.AuthInterceptorService;
 
 import lombok.RequiredArgsConstructor;
 
+@Profile("!test")
 @Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {

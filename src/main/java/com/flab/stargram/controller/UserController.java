@@ -43,6 +43,6 @@ public class UserController {
 	@PostMapping("/users/logout")
 	public ApiResult logout(HttpServletResponse response) {
 		authCookieService.removeAuthCookie(response);
-		return ApiResult.success(null);
+		return ApiResult.success();
 	}
 }
