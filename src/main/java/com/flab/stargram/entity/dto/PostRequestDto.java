@@ -13,5 +13,4 @@ public class PostRequestDto {
 
     @NotEmpty(message = "content는 필수 입니다.")
     private String content;
-
 }

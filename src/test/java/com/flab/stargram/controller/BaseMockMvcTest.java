@@ -21,7 +21,6 @@ import com.flab.stargram.config.RestDocsConfiguration;
 @Import(RestDocsConfiguration.class)
 @ExtendWith(RestDocumentationExtension.class)
 public abstract class BaseMockMvcTest extends BaseMockTest{
-
     @Autowired
     protected RestDocumentationResultHandler restDocs;
 

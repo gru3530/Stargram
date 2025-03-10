@@ -34,7 +34,6 @@ class FollowControllerTestConfig {
 class FollowControllerTest extends BaseMockMvcTest {
     @Autowired
     private FollowService followService;
-
     @Test
     void followUser() throws Exception {
         // Given
