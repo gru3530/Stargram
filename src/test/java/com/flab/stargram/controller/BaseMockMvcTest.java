@@ -2,9 +2,12 @@ package com.flab.stargram.controller;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
 
+import java.io.File;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.context.annotation.Import;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -20,6 +23,7 @@ import com.flab.stargram.config.RestDocsConfiguration;
 
 @Import(RestDocsConfiguration.class)
 @ExtendWith(RestDocumentationExtension.class)
+@AutoConfigureRestDocs(outputDir = "build/generated-snippets")
 public abstract class BaseMockMvcTest extends BaseMockTest{
     @Autowired
     protected RestDocumentationResultHandler restDocs;
@@ -33,6 +37,12 @@ public abstract class BaseMockMvcTest extends BaseMockTest{
     void setUpMvc(
         final WebApplicationContext context,
         final RestDocumentationContextProvider restDocumentation) {
+
+        File snippetsDir = new File("build/generated-snippets");
+        if (!snippetsDir.exists()) {
+            snippetsDir.mkdirs();
+        }
+
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
             .apply(documentationConfiguration(restDocumentation))
             .alwaysDo(MockMvcResultHandlers.print())

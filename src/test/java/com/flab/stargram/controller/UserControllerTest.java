@@ -78,7 +78,7 @@ class UserControllerTest extends BaseMockMvcTest {
                 ),
                 responseFields(
                     fieldWithPath("code").description("응답 코드"),
-                    fieldWithPath("data.id").description("회원 ID"),
+                    fieldWithPath("data.userId").description("회원 ID"),
                     fieldWithPath("data.userName").description("사용자 이름"), // 기존 "nickname"을 "userName"으로 변경
                     fieldWithPath("data.email").description("사용자 이메일"),
                     fieldWithPath("data.password").description("비밀번호"),
@@ -116,7 +116,7 @@ class UserControllerTest extends BaseMockMvcTest {
                 ),
                 responseFields(
                     fieldWithPath("code").description("응답 코드"),
-                    fieldWithPath("data.id").description("회원 ID"),
+                    fieldWithPath("data.userId").description("회원 ID"),
                     fieldWithPath("data.userName").description("사용자 이름"),
                     fieldWithPath("data.email").description("사용자 이메일"),
                     fieldWithPath("data.password").description("비밀번호"),

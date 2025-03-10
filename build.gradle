@@ -49,17 +49,17 @@ dependencies {
 
 tasks.test {
 	useJUnitPlatform()
+	finalizedBy("copyDocs")
 }
 
 tasks.register("copyDocs", Copy) {
-	dependsOn test
 	from("build/generated-snippets")
 	into("src/docs")
 	include("**/*.adoc")
+	finalizedBy("generateIndexAdoc")
 }
 
 tasks.register("generateIndexAdoc") {
-	dependsOn copyDocs
 	doLast {
 		def docsDir = file("src/docs")
 		def indexAdoc = file("${docsDir}/index.adoc")
@@ -102,13 +102,12 @@ tasks.register("generateIndexAdoc") {
 		indexAdoc.withWriter("UTF-8") { writer ->
 			writer.write(content.toString())
 		}
-
 		println "index.adoc 자동 생성 완료"
 	}
+	finalizedBy("convertIndexToHtml")
 }
 
 tasks.register("convertIndexToHtml", AsciidoctorTask) {
-	dependsOn generateIndexAdoc
 	sourceDir = (file("src/docs"))
 	outputDir = (file("src/docs"))
 	baseDirFollowsSourceFile()
@@ -122,6 +121,7 @@ tasks.register("convertIndexToHtml", AsciidoctorTask) {
 	}
 }
 
-tasks.named("build") {
-	dependsOn("convertIndexToHtml")
-}
+
+
+
+
