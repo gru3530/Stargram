@@ -16,8 +16,6 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     //DELETE FROM follow WHERE follower_id = ? AND following_id = ?
     void deleteByFollowerIdAndFollowingId(Long followerId, Long followingId);
     //SELECT COUNT(*) FROM follow WHERE following_id = ?;
-    long countByFollowingId(Long followingId);
-    //SELECT COUNT(*) FROM follow WHERE follower_id = ?;
     long countByFollowerId(Long followerId);
     //SELECT * FROM follow WHERE following_id = ?;
     List<Follow> findByFollowingId(Long followingId);

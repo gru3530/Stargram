@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Component("INFLUENCER")
 public class InfluencerFanoutStrategy implements FanoutStrategy {
-    CacheService cacheService;
+    private final CacheService cacheService;
 
     @Override
     public void distributeToFollowers(Post post) {

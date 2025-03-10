@@ -28,8 +28,8 @@ public class AuthService {
     public String generateToken(User user) {
         Date date = new Date();
         return Jwts.builder()
-            .subject(user.getId().toString())
-            .claim("userId", user.getId())
+            .subject(user.getUserId().toString())
+            .claim("userId", user.getUserId())
             .issuedAt(date)
             .expiration(new Date(date.getTime() + testJwtExpiration))
             .signWith(privateKey)

@@ -18,10 +18,6 @@ public class FollowGroupService {
         return followGroupRepository.existsByFollowingId(userId);
     }
 
-    public boolean hasFollower(Long userId) {
-        return followGroupRepository.existsByFollowerId(userId);
-    }
-
     @Transactional
     public FollowGroup getOrCreateFollowGroup(FollowDto followDto) {
         FollowGroup followGroup = followGroupRepository.findByFollowingId(followDto.getFollowingId());

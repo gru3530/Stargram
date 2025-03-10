@@ -17,7 +17,7 @@ public class RedisCacheService implements CacheService {
 
     @Override
     public void cachePostForInfluencer(Post post) {
-        String key = "Influencer";
+        String key = "Influencer" + post.getUserId();
         redisTemplate.opsForList().leftPush(key, post);
         redisTemplate.expire(key, Duration.ofDays(7));
     }

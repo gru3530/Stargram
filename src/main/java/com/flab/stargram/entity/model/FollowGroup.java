@@ -25,9 +25,6 @@ public class FollowGroup extends BaseEntity {
     @Column(nullable = false, unique = true)
     private Long followingId;
 
-    @CreatedDate
-    private LocalDateTime createdAt;
-
     private FollowGroup(Long followingId) {
         this.followingId = followingId;
     }
