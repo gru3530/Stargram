@@ -64,6 +64,10 @@ tasks.register("generateIndexAdoc") {
 		def docsDir = file("src/docs")
 		def indexAdoc = file("${docsDir}/index.adoc")
 
+		if (!docsDir.exists()){
+			docsDir.mkdirs()
+		}
+
 		def content = new StringBuilder()
 		content.append("= API 문서\n")
 		content.append(":doctype: book\n")
