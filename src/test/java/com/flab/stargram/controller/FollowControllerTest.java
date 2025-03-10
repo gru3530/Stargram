@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.stargram.entity.dto.FollowDto;
 import com.flab.stargram.service.FollowService;
 
@@ -32,11 +31,9 @@ class FollowControllerTestConfig {
 
 @WebMvcTest(controllers = FollowController.class)
 @Import(FollowControllerTestConfig.class)
-class FollowControllerTest extends BaseMockMvcTest{
+class FollowControllerTest extends BaseMockMvcTest {
     @Autowired
     private FollowService followService;
-
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     void followUser() throws Exception {
@@ -111,5 +108,4 @@ class FollowControllerTest extends BaseMockMvcTest{
                 )
             ));
     }
-
 }
