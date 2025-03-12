@@ -120,8 +120,3 @@ tasks.register("convertIndexToHtml", AsciidoctorTask) {
 		println "index.html 변환 완료"
 	}
 }
-
-
-
-
-

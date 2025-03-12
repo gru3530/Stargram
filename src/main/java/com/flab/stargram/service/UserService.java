@@ -32,7 +32,7 @@ public class UserService {
 
     @Transactional
     public User login(LoginDto dto) {
-        User user = getUser(dto);
+        User user = fetchUser(dto);
 
         if (!user.isCorrectPassword(dto)) {
             throw new InvalidPasswordException(ApiResponseEnum.INVALID_PASSWORD);
@@ -64,7 +64,7 @@ public class UserService {
         return userRepository.findByUserNameOrEmail(dto.getUserName(), dto.getEmail());
     }
 
-    private User getUser(LoginDto dto) {
+    private User fetchUser(LoginDto dto) {
         User user = userRepository.findByUserName(dto.getUserName());
         if (user == null) {
             throw new DataNotFoundException(ApiResponseEnum.USER_NOT_FOUND);
