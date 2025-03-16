@@ -1,0 +1,32 @@
+|===
+|Path|Type|Description
+
+|`+code+`
+|`+String+`
+|응답 코드
+
+|`+data.userId+`
+|`+Null+`
+|회원 ID
+
+|`+data.userName+`
+|`+String+`
+|사용자 이름
+
+|`+data.email+`
+|`+String+`
+|사용자 이메일
+
+|`+data.password+`
+|`+String+`
+|비밀번호
+
+|`+data.userType+`
+|`+String+`
+|사용자 유형
+
+|`+data.loggedInAt+`
+|`+Null+`
+|로그인 시간
+
+|===

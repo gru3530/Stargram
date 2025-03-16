@@ -1,0 +1,8 @@
+[source,bash]
+----
+$ echo '{
+  "userId" : 1,
+  "content" : "test Content"
+}' | http POST 'http://localhost:8080/posts' \
+    'Content-Type:application/json;charset=UTF-8'
+----

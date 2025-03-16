@@ -1,0 +1,14 @@
+[source,json,options="nowrap"]
+----
+{
+  "code" : "SUCCESS",
+  "data" : {
+    "userId" : null,
+    "userName" : "test",
+    "email" : "test@f-lab.com",
+    "password" : "testpassword",
+    "userType" : "REGULAR",
+    "loggedInAt" : null
+  }
+}
+----

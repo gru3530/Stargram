@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/posts' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "userId" : 1,
+  "content" : "test Content"
+}'
+----

@@ -1,0 +1,8 @@
+|===
+|Path|Type|Description
+
+|`+code+`
+|`+String+`
+|요청 성공 여부
+
+|===

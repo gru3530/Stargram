@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+followingId+`
+|`+Number+`
+|팔로우하는 사용자 ID
+
+|`+followerId+`
+|`+Number+`
+|팔로우를 받는 사용자 ID
+
+|===
