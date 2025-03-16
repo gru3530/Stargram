@@ -1,0 +1,55 @@
+= API 문서
+:doctype: book
+:toc: left
+:toclevels: 2
+:sectlinks:
+:source-highlighter: highlightjs
+== API 목록
+
+=== follow-controller-test
+
+==== get-followers
+include::follow-controller-test/get-followers/http-request.adoc[]
+include::follow-controller-test/get-followers/http-response.adoc[]
+include::follow-controller-test/get-followers/path-parameters.adoc[]
+include::follow-controller-test/get-followers/response-fields.adoc[]
+
+==== unfollow-user
+include::follow-controller-test/unfollow-user/http-request.adoc[]
+include::follow-controller-test/unfollow-user/http-response.adoc[]
+include::follow-controller-test/unfollow-user/request-fields.adoc[]
+include::follow-controller-test/unfollow-user/response-fields.adoc[]
+
+==== follow-user
+include::follow-controller-test/follow-user/http-request.adoc[]
+include::follow-controller-test/follow-user/http-response.adoc[]
+include::follow-controller-test/follow-user/request-fields.adoc[]
+include::follow-controller-test/follow-user/response-fields.adoc[]
+
+=== user-controller-test
+
+==== sign-up
+include::user-controller-test/sign-up/http-request.adoc[]
+include::user-controller-test/sign-up/http-response.adoc[]
+include::user-controller-test/sign-up/request-fields.adoc[]
+include::user-controller-test/sign-up/response-fields.adoc[]
+
+==== logout
+include::user-controller-test/logout/http-request.adoc[]
+include::user-controller-test/logout/http-response.adoc[]
+include::user-controller-test/logout/response-fields.adoc[]
+
+==== login
+include::user-controller-test/login/http-request.adoc[]
+include::user-controller-test/login/http-response.adoc[]
+include::user-controller-test/login/request-fields.adoc[]
+include::user-controller-test/login/response-fields.adoc[]
+
+=== post-controller-test
+
+==== create-post
+include::post-controller-test/create-post/http-request.adoc[]
+include::post-controller-test/create-post/http-response.adoc[]
+include::post-controller-test/create-post/request-fields.adoc[]
+include::post-controller-test/create-post/response-fields.adoc[]
+

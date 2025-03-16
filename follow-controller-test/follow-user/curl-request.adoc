@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/users/follow' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "followingId" : 1,
+  "followerId" : 2
+}'
+----

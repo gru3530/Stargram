@@ -1,0 +1,8 @@
+[source,json,options="nowrap"]
+----
+{
+  "userName" : "test",
+  "password" : "testpassword",
+  "email" : "test@f-lab.com"
+}
+----

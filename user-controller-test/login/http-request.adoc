@@ -1,0 +1,13 @@
+[source,http,options="nowrap"]
+----
+POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 86
+Host: localhost:8080
+
+{
+  "userName" : "test",
+  "password" : "testpassword",
+  "email" : "test@f-lab.com"
+}
+----
