@@ -17,7 +17,7 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 ✅ **[GitHub Project](https://github.com/orgs/f-lab-edu/projects/331)를 활용한 애자일 개발 진행**  
 ✅ **[RESTful API 설계 및 문서화](https://docs.google.com/spreadsheets/d/1piFu00NngGIWQvQfoORgb7A-OuY4zVjEH804PHcYPtA/edit?gid=0#gid=0)**  
 ✅ **CI/CD 파이프라인 구축 및 GitHub Actions를 통한 자동화된 테스트 및 배포**  
-✅ **[Spring RestDocs](https://gru3530.github.io/Stargram/)를 활용한 API 문서 자동 생성 및 배포**
+✅ **[Spring RestDocs](https://f-lab-edu.github.io/Stargram/)를 활용한 API 문서 자동 생성 및 배포**
 
 🚀 **[Issues](https://github.com/f-lab-edu/Stargram/issues)**  
 📌 **[코드 규칙 (Naver Convention)](https://naver.github.io/hackday-conventions-java/#_intellij)**
