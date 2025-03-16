@@ -34,17 +34,25 @@ jobs:
         run: ./gradlew build -x test
 
       - name: 테스트 실행
-        run: ./gradlew test
+        run: ./gradlew test asciidoctor --info --warning-mode all
+
+      - name: 파일 확인
+        run: |
+          echo "📂 build/docs/html 디렉토리 상태:"
+          ls -R build/docs/html
+          echo "📂 src/docs 디렉토리 상태:"
+          ls -R src/docs
+
 
       - name: 문서 배포 준비
         run: |
           mkdir -p docs
+          cp build/docs/html/index.html docs/
           cp -r src/docs/* docs/
 
-#      - name: stargram docs 배포
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          deploy_key: ${{ secrets.SSH_DEPLOY_KEY }}
-#          publish_dir: ./docs
-#          publish_branch: main
-#          external_repository: gru3530/stargram-docs
+      - name: Stargram API 문서 GitHub Pages 배포
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages

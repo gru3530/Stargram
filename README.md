@@ -1,7 +1,7 @@
 # 🌟 Stargram - Instagram Clone Project
-
+![Java](https://img.shields.io/badge/Java-17-blue) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4-green) ![OAuth2](https://img.shields.io/badge/OAuth2-WIP-orange)
 > **Stargram은 인스타그램의 핵심 기능을 구현한 SNS 플랫폼입니다.**
-> **사용자는 사진/동영상과 텍스트를 공유하며, 댓글과 좋아요를 통해 소통할 수 있습니다.**
+> **사용자는 사진, 동영상과 텍스트를 공유하며, 댓글과 좋아요를 통해 소통할 수 있습니다.**
 
 ---
 
@@ -13,14 +13,14 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 ✅ **객체 지향 원칙(SOLID) 적용**  
 ✅ **Spring의 트랜잭션 관리(@Transactional) 활용**  
 ✅ **테스트 코드(JUnit) 기반 안정성 확보**  
-✅ **GitHub PR & Code Review 방식으로 코드 품질 개선**  
-✅ **GitHub Projects를 활용한 애자일 개발 진행**  
-✅ **RESTful API 설계 및 문서화**
+✅ **[GitHub PR & Code Review](https://github.com/f-lab-edu/Stargram/pulls) 방식으로 코드 품질 개선**  
+✅ **[GitHub Project](https://github.com/orgs/f-lab-edu/projects/331)를 활용한 애자일 개발 진행**  
+✅ **[RESTful API 설계 및 문서화](https://docs.google.com/spreadsheets/d/1piFu00NngGIWQvQfoORgb7A-OuY4zVjEH804PHcYPtA/edit?gid=0#gid=0)**  
+✅ **CI/CD 파이프라인 구축 및 GitHub Actions를 통한 자동화된 테스트 및 배포**  
+✅ **[Spring RestDocs](https://gru3530.github.io/Stargram/)를 활용한 API 문서 자동 생성 및 배포**
 
-
-📌 **[Stargram API LIST](https://docs.google.com/spreadsheets/d/1piFu00NngGIWQvQfoORgb7A-OuY4zVjEH804PHcYPtA/edit?gid=0#gid=0)**  
-📌 **[Stargram 애자일 프로젝트](https://github.com/orgs/f-lab-edu/projects/331)**  
-📌 **[코드 규칙 (Naver Convention)](https://naver.github.io/hackday-conventions-java/#_intellij)**  
+🚀 **[Issues](https://github.com/f-lab-edu/Stargram/issues)**  
+📌 **[코드 규칙 (Naver Convention)](https://naver.github.io/hackday-conventions-java/#_intellij)**
 
 ---
 
@@ -33,7 +33,7 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 | **Version Control** | Git & GitHub |
 | **Testing** | JUnit, Mockito |
 | **Development Tools** | IntelliJ IDEA, Gradle |
-| **Infrastructure** | Redis (세션 관리) |
+| **Infrastructure** | Redis |
 
 ---
 
@@ -46,7 +46,7 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 ### 📌 **2. 피드 시스템**
 - ✅ 이미지/동영상 업로드  (구현예정)
 - ✅ 댓글 작성 및 삭제
-- ✅ 좋아요 기능
+- ✅ 좋아요 기능 
 
 ### 📌 **3. 팔로우/팔로잉 시스템**
 - ✅ 사용자가 다른 유저를 팔로우/언팔로우
@@ -60,6 +60,10 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 - ✅ JUnit 기반의 단위 테스트(Unit Test) 및 통합 테스트(Integration Test) 작성
 - ✅ Mocking을 활용한 서비스 테스트 수행
 
+### 📌 **6. CI/CD 및 테스트**
+- ✅ PR 생성 시 GitHub Actions 또는 CI 환경에서 자동 테스트가 실행
+- ✅ 테스트 후 Spring RestDocs를 활용한 API 문서 자동 생성 및 배포
+
 ---
 
 ## 🏗 **프로젝트 구조**
@@ -67,7 +71,7 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 Stargram
 │── src
 │   ├── main
-│   │   ├── java.com.flab.stargram
+│   │   ├── java/com/stargram
 │   │   │   ├── config         # 프로젝트 설정 (예외 처리, 보안, 키 관리 등)
 │   │   │   ├── controller     # REST API 컨트롤러
 │   │   │   ├── domain         # 비즈니스 로직
@@ -81,3 +85,5 @@ Stargram
 ```
 
 ---
+
+
