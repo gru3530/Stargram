@@ -60,6 +60,7 @@ tasks.register("copyDocs", Copy) {
 }
 
 tasks.register("generateIndexAdoc") {
+	outputs.file("src/docs/index.adoc")
 	doLast {
 		def docsDir = file("src/docs")
 		def indexAdoc = file("${docsDir}/index.adoc")
@@ -102,21 +103,28 @@ tasks.register("generateIndexAdoc") {
 		indexAdoc.withWriter("UTF-8") { writer ->
 			writer.write(content.toString())
 		}
-		println "index.adoc 자동 생성 완료"
+		println "✅ index.adoc 자동 생성 완료"
 	}
-	finalizedBy("convertIndexToHtml")
 }
 
-tasks.register("convertIndexToHtml", AsciidoctorTask) {
-	sourceDir = (file("src/docs"))
-	outputDir = (file("src/docs"))
+asciidoctor {
+	dependsOn("generateIndexAdoc")
+	sourceDir = file("src/docs")
+	outputDir = file("build/docs/html")
 	baseDirFollowsSourceFile()
-	attributes "source-highlighter": "highlightjs"
+	attributes(
+			"source-highlighter": "highlightjs",
+			doctype: "book",
+			toc: "left",
+			toclevels: "2",
+			sectlinks: ""
+	)
 	sources {
-		include("index.adoc")
+		include("index.adoc") // 변환할 파일 지정
 	}
 	doLast {
 		file("src/docs/index.adoc").delete()
-		println "index.html 변환 완료"
+		println "✅ index.html 변환 완료"
 	}
 }
+
