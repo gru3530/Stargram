@@ -1,7 +1,0 @@
-[source,json,options="nowrap"]
-----
-{
-  "code" : "SUCCESS",
-  "data" : [ 2, 3, 4 ]
-}
-----

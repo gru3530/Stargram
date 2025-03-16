@@ -1,7 +1,0 @@
-[source,json,options="nowrap"]
-----
-{
-  "followingId" : 1,
-  "followerId" : 2
-}
-----
