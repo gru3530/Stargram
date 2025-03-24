@@ -61,8 +61,8 @@ Stargram은 **Instagram의 핵심 기능을 모방한 SNS 플랫폼**으로, 사
 - ✅ Mocking을 활용한 서비스 테스트 수행
 
 ### 📌 **6. CI/CD 및 테스트**
-- ✅ PR 생성 시 GitHub Actions 또는 CI 환경에서 자동 테스트가 실행
-- ✅ 테스트 후 Spring RestDocs를 활용한 API 문서 자동 생성 및 배포
+- ✅ PR 생성 시 GitHub Actions 환경에서 자동 테스트가 실행
+- ✅ 테스트 중 생성된 Spring RestDocs를 활용한 API 문서 자동 생성 및 배포
 
 ---
 
